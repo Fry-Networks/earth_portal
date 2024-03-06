@@ -28,6 +28,6 @@ export function TitleMd({ children }: TitleProps) {
 
 export function TitleSm({ children }: TitleProps) {
     return (
-        <h4 className="text-xl font-bold">{children}</h4>
+        <h4 className="text-xl">{children}</h4>
     )
 }

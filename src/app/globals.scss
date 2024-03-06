@@ -20,7 +20,10 @@ body {
   color: rgb(var(--foreground-rgb));
   background: #171717;
 }
-
+hr {
+  border:1px solid rgba(256,256,256,0.5);
+  margin:0 auto;
+}
 #hero-bg {
   background: url('./../../public/img/bg.png');
   background-size: cover;
@@ -58,3 +61,9 @@ body {
   }
 }
 
+footer {
+  .copyright {
+    color: #595959;
+    font-size: 0.75rem;
+  }
+}
