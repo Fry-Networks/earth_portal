@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 
 // Define the Nav component with TypeScript
