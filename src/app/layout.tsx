@@ -7,7 +7,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fry Foundation | Soil Portal",
-  description: "",
+  description: "Connect Your Wallet and Soil Miner",
 };
 
 export default function RootLayout({
