@@ -8,7 +8,7 @@ import {
   algosigner,
   useWallet,
 } from "@txnlab/use-wallet";
-import Connect from "./components/Connect";
+// import Connect from "./components/Connect";
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { DaffiWalletConnect } from "@daffiwallet/connect";
@@ -21,27 +21,27 @@ import { EcowittModal } from "./KeyModals/EcowittModal";
 import { WeatherXMModal } from "./KeyModals/WeatherXMModal";
 
 export default function Wallet() {
-  const walletProviders = useInitializeProviders({
-    providers: [
-      { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
-      { id: PROVIDER_ID.PERA, clientStatic: PeraWalletConnect },
-      { id: PROVIDER_ID.DAFFI, clientStatic: DaffiWalletConnect },
-      { id: PROVIDER_ID.MYALGO, clientStatic: MyAlgoConnect },
-      {
-        id: PROVIDER_ID.WALLETCONNECT,
-        clientStatic: WalletConnectModalSign,
-        clientOptions: {
-          projectId: "74761852c2f607c540bb116a1bc9f011",
-          metadata: {
-            name: "Fry Foundation",
-            description: "Authenticate yourself",
-            url: "https://soil.fryfoundation.com",
-            icons: ["https://walletconnect.com/walletconnect-logo.png"],
+    const walletProviders = useInitializeProviders({
+      providers: [
+        { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
+        { id: PROVIDER_ID.PERA, clientStatic: PeraWalletConnect },
+        { id: PROVIDER_ID.DAFFI, clientStatic: DaffiWalletConnect },
+        { id: PROVIDER_ID.MYALGO, clientStatic: MyAlgoConnect },
+        {
+          id: PROVIDER_ID.WALLETCONNECT,
+          clientStatic: WalletConnectModalSign,
+          clientOptions: {
+            projectId: "74761852c2f607c540bb116a1bc9f011",
+            metadata: {
+              name: "Fry Foundation",
+              description: "Authenticate yourself",
+              url: "https://soil.fryfoundation.com",
+              icons: ["https://walletconnect.com/walletconnect-logo.png"],
+            },
           },
         },
-      },
-    ],
-  });
+      ],
+    });
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isEcowittModalOpen, setIsEcowittModalOpen] = useState(false);
   const [isWeatherXMModalOpen, setIsWeatherXMModalOpen] = useState(false);
