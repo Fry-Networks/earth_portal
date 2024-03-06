@@ -11,7 +11,7 @@ export default function Home() {
           Connect Your Wallet
         </ButtonPrimary> */}
       </Hero>
-      <section id="wallet_section" className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+      <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
         <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
           <p className="text-center">Please connect a wallet.</p>
           <ul id="wallets_list" className="list-none pt-3">
