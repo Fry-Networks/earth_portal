@@ -9,7 +9,7 @@ export default function Footer() {
             <hr />
 
             <div className="flex flex-col justify-between mt-5 p-4 md:flex-row">
-                <div className="flex justify-between max-w-sm mx-auto">
+                <div className="flex justify-between max-w-sm">
                     <Link className="p-2    " href="https://twitter.com/FrysCrypto">
                         <svg height="20" width="25" viewBox="0 0 200 200" fill="white">
                             <g>
