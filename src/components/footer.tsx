@@ -4,7 +4,7 @@ import { TitleSm } from './title';
 export default function Footer() {
     return (
         <footer
-            className="footer   max-w-screen-xl p-4"
+            className="footer   max-w-screen-xl p-4 mx-auto"
         >
             <hr />
 
