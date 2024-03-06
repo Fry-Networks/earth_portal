@@ -17,13 +17,13 @@ export default function Footer() {
                             </g>
                         </svg>
                     </Link>
-                    <Link className="p-2    " href="https://discord.gg/cHT2QY6s" style={{ marginLeft: '2px' }}>
+                    <Link className="p-2" href="https://discord.gg/cHT2QY6s" style={{ marginLeft: '2px' }}>
                         <svg height="25" width="25" viewBox="0 0 200 200" fill="white">
                             <path xmlns="http://www.w3.org/2000/svg" d="M78.864,0c43.556,0,78.863,35.308,78.863,78.864c0,43.552-35.308,78.868-78.863,78.868   C35.308,157.731,0,122.416,0,78.864C0,35.308,35.308,0,78.864,0z" fill="white" />
                             <path xmlns="http://www.w3.org/2000/svg" d="M113.101,53.34c0,0-9.76-7.635-21.284-8.514l-1.043,2.076c10.425,2.552,15.2,6.207,20.199,10.695   c-8.612-4.394-17.112-8.514-31.927-8.514c-14.815,0-23.322,4.12-31.926,8.514c4.985-4.488,10.677-8.545,20.192-10.695l-1.036-2.076   c-12.099,1.145-21.284,8.514-21.284,8.514S34.09,69.143,32.221,100.166c10.985,12.672,27.669,12.771,27.669,12.771l3.487-4.649   c-5.923-2.059-12.61-5.741-18.386-12.378c6.889,5.209,17.293,10.642,34.055,10.642c16.762,0,27.158-5.426,34.055-10.642   c-5.783,6.637-12.47,10.319-18.386,12.378l3.487,4.649c0,0,16.677-0.099,27.669-12.771C123.995,69.143,113.101,53.34,113.101,53.34   z M65.211,91.651c-4.117,0-7.449-3.809-7.449-8.514c0-4.701,3.333-8.513,7.449-8.513c4.117,0,7.45,3.812,7.45,8.513   C72.661,87.843,69.328,91.651,65.211,91.651z M92.881,91.651c-4.117,0-7.45-3.809-7.45-8.514c0-4.701,3.333-8.513,7.45-8.513   c4.116,0,7.449,3.812,7.449,8.513C100.33,87.843,96.99,91.651,92.881,91.651z" fill="black" />
                         </svg>
                     </Link>
-                    <Link className="p-2    " href="https://www.linkedin.com/company/fry-foundation/">
+                    <Link className="p-2" href="https://www.linkedin.com/company/fry-foundation/">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="white" height="20px" width="20px" version="1.1" id="Layer_1" viewBox="0 0 310 310" xmlSpace="preserve">
                             <g id="XMLID_801_">
                                 <path id="XMLID_802_" d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73   C77.16,101.969,74.922,99.73,72.16,99.73z" />
@@ -32,12 +32,12 @@ export default function Footer() {
                             </g>
                         </svg>
                     </Link>
-                    <Link className="p-2    " href="https://facebook.com/your-profile">
+                    <Link className="p-2" href="https://facebook.com/your-profile">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="white" height="20px" width="20px" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="73 0 267 266.9" enableBackground="new 73 0 267 266.9" xmlSpace="preserve"><script id="dashlane_tiresias" /><script id="dashlane_webauthn" />
                             <path id="f" fill="white" d="M255.4,262.3v-99.8h33.5l5-38.9h-38.5V98.8c0-11.3,3.1-18.9,19.3-18.9l20.6,0V45  c-3.6-0.5-15.8-1.5-30-1.5c-29.7,0-50,18.1-50,51.4v28.7h-33.6v38.9h33.6v99.8H255.4z" />
                         </svg>
                     </Link>
-                    <Link className="p-2    " href="https://www.youtube.com/channel/UCXwYRxNo3yOmQjq1eEClVjg">
+                    <Link className="p-2" href="https://www.youtube.com/channel/UCXwYRxNo3yOmQjq1eEClVjg">
                         <img
                             alt="Youtube"
                             style={{ width: '20px', height: '20px', objectFit: 'cover' }}
