@@ -66,7 +66,7 @@ export default function Connect() {
   const { providers, activeAccount } = useWallet();
 
   // Check if any provider is connected
-  const anyConnected = providers?.some(provider => provider.isConnected);
+  const anyConnected = provider s?.some(provider => provider.isConnected);
 
   return (
     <div style={{

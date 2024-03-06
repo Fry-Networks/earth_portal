@@ -7,8 +7,9 @@ import {
   PROVIDER_ID,
   algosigner,
   useWallet,
+  Provider
 } from "@txnlab/use-wallet";
-// import Connect from "./components/Connect";
+import Connect from "./Connect";
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { DaffiWalletConnect } from "@daffiwallet/connect";
@@ -26,7 +27,6 @@ export default function Wallet() {
         { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
         { id: PROVIDER_ID.PERA, clientStatic: PeraWalletConnect },
         { id: PROVIDER_ID.DAFFI, clientStatic: DaffiWalletConnect },
-        { id: PROVIDER_ID.MYALGO, clientStatic: MyAlgoConnect },
         {
           id: PROVIDER_ID.WALLETCONNECT,
           clientStatic: WalletConnectModalSign,
