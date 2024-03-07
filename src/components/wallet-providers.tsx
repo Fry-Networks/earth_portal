@@ -14,7 +14,6 @@ export default function WalletProviders() {
                 <ul id="wallets_list" className="list-none pt-3">
                     {providers?.map((provider, index) => {
                         if (anyConnected && activeAccount) {
-                            console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId )
                             if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
                                 return (
                                     <section id="wallet_connected">
