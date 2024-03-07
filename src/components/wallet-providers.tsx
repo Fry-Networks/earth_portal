@@ -10,6 +10,15 @@ interface AccountSelectProps {
 const SoilAPISelect = () => (
     <div className="max-w-sm mx-auto">
         <TitleMd>Select a Soil API</TitleMd>
+        <Button >
+            AmbientWeather
+        </Button>
+        <Button>
+            EcoWitt
+        </Button>
+        <Button>
+            WeatherXM
+        </Button>
     </div>
 )
 
@@ -53,9 +62,9 @@ export default function WalletProviders() {
                                         <>
                                             <section id="wallet_connected">
                                                 <span className="text-center block mb-2">
-                                                    <TitleMd>Connected to {provider.metadata.name}</TitleMd>
+                                                    <TitleMd>Successfully connected to {provider.metadata.name}!</TitleMd>
                                                 </span>
-                                                <u>Stats for Nerds:</u>
+                                                <u><b>Stats for Nerds:</b></u>
                                                 <div>
                                                     <b>Name: </b>
                                                     <span>
