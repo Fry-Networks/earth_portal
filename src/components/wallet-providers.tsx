@@ -1,4 +1,4 @@
-import { Provider, useWallet } from "@txnlab/use-wallet"
+import { PROVIDER_ID, Provider, useWallet } from "@txnlab/use-wallet"
 import { Button } from "./button";
 import Image from "next/image";
 export default function WalletProviders() {
@@ -8,8 +8,8 @@ export default function WalletProviders() {
             <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
                 <p className="text-center">Please connect a wallet.</p>
                 <ul id="wallets_list" className="list-none pt-3">
-                    {providers?.map((provider) => (
-                        <li>
+                    {providers?.map((provider, index) => (
+                        <li key={index}>
                             <Button href="/connect/daffi" label="Connect to Daffi" onClick={provider.connect}>
                                 <Image src={provider.metadata.icon} width={24} height={24} className="inline-block relative" alt="Connect to Daffi" /> {provider.metadata.name}
                             </Button>

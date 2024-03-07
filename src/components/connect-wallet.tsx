@@ -59,6 +59,7 @@ export default function ConnectWallet() {
             reconnectProviders(walletProviders);
         }
     }, []);
+    
     return (
         <WalletProvider value={walletProviders}>
             <WalletProviders />

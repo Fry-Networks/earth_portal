@@ -21,6 +21,11 @@ interface ButtonProps {
   style: React.CSSProperties;
   activeAccount?: any;
 }
+const ConnectButton = ({ provider, style }: ButtonProps) => (
+  <button style={style} onClick={provider.connect}>
+    Connect
+  </button>
+);
 
 const DisconnectButton = ({ provider, style }: ButtonProps) => (
   <button
@@ -35,11 +40,7 @@ const DisconnectButton = ({ provider, style }: ButtonProps) => (
   </button>
 );
 
-const ConnectButton = ({ provider, style }: ButtonProps) => (
-  <button style={style} onClick={provider.connect}>
-    Connect
-  </button>
-);
+
 
 const AccountSelect = ({ provider, style, activeAccount }: ButtonProps) => (
   <select
