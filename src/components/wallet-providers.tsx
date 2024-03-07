@@ -6,6 +6,13 @@ interface AccountSelectProps {
     provider: Provider;
     activeAccount?: any;
 }
+
+const SoilAPISelect = () => (
+    <div className="max-w-sm mx-auto">
+        <TitleMd>Select a Soil API</TitleMd>
+    </div>
+)
+
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
     <>
         <label htmlFor="account_select" className="font-semibold">
@@ -27,11 +34,13 @@ const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
 
 export default function WalletProviders() {
     const { providers, activeAccount } = useWallet();
+    
     const anyConnected = providers?.some(provider => provider.isConnected);
 
     return (
-
         <>
+
+            {anyConnected && <SoilAPISelect/>}
             <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
                 <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
                     {!anyConnected && <p className="text-center text-lg">Please connect a wallet.</p>}
@@ -41,29 +50,31 @@ export default function WalletProviders() {
                                 // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
                                 if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
                                     return (
-                                        <section id="wallet_connected">
-                                            <span className="text-center block mb-2">
-                                                <TitleMd>Connected to {provider.metadata.name}</TitleMd>
-                                            </span>
-                                            <u>Stats for Nerds:</u>
-                                            <div>
-                                                <b>Name: </b>
-                                                <span>
-                                                    {activeAccount.name}
+                                        <>
+                                            <section id="wallet_connected">
+                                                <span className="text-center block mb-2">
+                                                    <TitleMd>Connected to {provider.metadata.name}</TitleMd>
                                                 </span>
-                                            </div>
-                                            <div>
-                                                <b>ProviderId: </b><span>{activeAccount.providerId}</span>
-                                            </div>
-                                            <br/>
-                                            <AccountSelect provider={provider} activeAccount={activeAccount} />
-                                            <br />
-                                            <hr />
-                                            <br />
-                                            <Button label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
-                                                Disconnect from {provider.metadata.name}
-                                            </Button>
-                                        </section>
+                                                <u>Stats for Nerds:</u>
+                                                <div>
+                                                    <b>Name: </b>
+                                                    <span>
+                                                        {activeAccount.name}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <b>ProviderId: </b><span>{activeAccount.providerId}</span>
+                                                </div>
+                                                <br />
+                                                <AccountSelect provider={provider} activeAccount={activeAccount} />
+                                                <br />
+                                                <hr />
+                                                <br />
+                                                <Button label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
+                                                    Disconnect from {provider.metadata.name}
+                                                </Button>
+                                            </section>
+                                        </>
                                     )
                                 }
                             } else {
