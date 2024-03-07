@@ -8,9 +8,7 @@ import {
     useInitializeProviders,
     WalletProvider,
     PROVIDER_ID,
-    algosigner,
     useWallet,
-    Provider
 } from "@txnlab/use-wallet";
 
 import { DeflyWalletConnect } from '@blockshake/defly-connect'
@@ -55,22 +53,7 @@ export default function ConnectWallet() {
     };
 
     const [isModalOpen, setModalIsOpen] = useState(false);
-    function daffiConnect() {
-        console.log("daffiConnect");
-        setModalIsOpen(true);
-    }
-    function deflyConnect() {
-        console.log("deflyConnect")
-        setModalIsOpen(true);
-    }
-    function peraConnect() {
-        console.log("peraConnect")
-        setModalIsOpen(true);
-    }
-    function walletConnect() {
-        console.log("walletConnect")
-        setModalIsOpen(true);
-    }
+
     useEffect(() => {
         if (walletProviders !== null) {
             reconnectProviders(walletProviders);
