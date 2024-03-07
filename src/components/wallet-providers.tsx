@@ -27,7 +27,7 @@ export default function WalletProviders() {
     return (
         <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
             <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
-                <p className="text-center">Please connect a wallet.</p>
+                <p className="text-center text-lg">Please connect a wallet.</p>
                 <ul id="wallets_list" className="list-none pt-3 max-w-sm">
                     {providers?.map((provider, index) => {
                         if (anyConnected && activeAccount) {
