@@ -16,6 +16,7 @@
     "@walletconnect/modal-sign-html": "^2.6.2",
     "algosdk": "^2.7.0",
     "next": "14.1.1",
+    "pino-pretty": "^10.3.1",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.71.1"
