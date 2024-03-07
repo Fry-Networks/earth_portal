@@ -7,8 +7,8 @@ interface AccountSelectProps {
     activeAccount?: any;
 }
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
-    <select value={activeAccount ? activeAccount.address : "Address"} onChange={(e) => provider.setActiveAccount(e.target.value)} 
-    className="border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <select value={activeAccount ? activeAccount.address : "Address"} onChange={(e) => provider.setActiveAccount(e.target.value)}
+        className="border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option value={""}>
             --Please Choose an Address--
         </option>
@@ -27,7 +27,7 @@ export default function WalletProviders() {
     return (
         <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
             <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
-                <p className="text-center text-lg">Please connect a wallet.</p>
+                {!anyConnected && <p className="text-center text-lg">Please connect a wallet.</p>}
                 <ul id="wallets_list" className="list-none pt-3 max-w-sm">
                     {providers?.map((provider, index) => {
                         if (anyConnected && activeAccount) {
@@ -35,7 +35,20 @@ export default function WalletProviders() {
                             if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
                                 return (
                                     <section id="wallet_connected">
-                                        <TitleMd>Connected to {provider.metadata.name}</TitleMd>
+                                        <span className="text-center block mb-2">
+                                            <TitleMd>Connected to {provider.metadata.name}</TitleMd>
+                                        </span>
+                                        <u>Stats for Nerds:</u>
+                                        <div>
+                                            <b>Name: </b>
+                                            <span>
+                                                {activeAccount.name}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <b>ProviderId: </b><span>{activeAccount.providerId}</span>
+                                        </div>
+
                                         <AccountSelect provider={provider} activeAccount={activeAccount} />
                                         <Button label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
                                             Disconnect from {provider.metadata.name}
