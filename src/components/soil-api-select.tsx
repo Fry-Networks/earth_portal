@@ -119,9 +119,9 @@ const SoilAPISelect = () => {
     };
 
     return (
-        <section id="soil_api_select" className="block mx-auto px-4 py-4">
+        <section id="soil_api_select" className="bg-brand-black mt-7">
             {!selectedApi ? (
-                <div id="soil_api_btn_container" className="block pt-6 pb-4">
+                <div id="soil_api_btn_container" className="mt-4 p-4 bg-brand-black max-w-sm mx-auto ">
                     <TitleMd>Step 2: Select a Soil API</TitleMd>
                     <br />
                     <div className="max-w-sm">
@@ -137,7 +137,7 @@ const SoilAPISelect = () => {
                     </div>
                 </div>
             ) : (
-                <div id="api_input_container" className="block mx-auto py-4">
+                <div id="api_input_container" className="block max-w-md mx-auto py-4 px-6">
                     <TitleMd>{selectedApi}</TitleMd>
                     <p>Please enter the required information for {selectedApi}.</p>
                     <br />
