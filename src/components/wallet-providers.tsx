@@ -20,9 +20,9 @@ const SoilAPISelect = () => {
 
     }
     return (
-        <div className="max-w-sm mx-auto py-4">
+        <section id="soil_api_select" className="max-w-sm mx-auto py-4">
             <TitleMd className="text-center">Step 2: Select a Soil API</TitleMd>
-            <br/>
+            <br />
             <Button label="Connect to Ambient Weather" onClick={handleAmbientConnect}>
                 AmbientWeather
             </Button>
@@ -32,12 +32,12 @@ const SoilAPISelect = () => {
             <Button label="Connect to WeatherXM" onClick={handleWeatherXMConnect}>
                 WeatherXM
             </Button>
-        </div>
+        </section>
     )
 }
 
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
-    <>
+    <section id="account_select">
         <label htmlFor="account_select" className="font-semibold">
             Select Account
         </label>
@@ -52,7 +52,7 @@ const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
                 </option>
             ))}
         </select>
-    </>
+    </section>
 );
 
 export default function WalletProviders() {
@@ -64,7 +64,7 @@ export default function WalletProviders() {
         <>
 
             {anyConnected && <SoilAPISelect />}
-            <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
+            <section id="wallet_providers" className="block mx-auto px-4 sm:px-6 py-4">
                 <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
                     {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
                     <ul id="wallets_list" className="list-none pt-3 max-w-sm">
@@ -78,15 +78,17 @@ export default function WalletProviders() {
                                                 <span className="block mb-2">
                                                     <TitleMd>Successfully connected to {provider.metadata.name}!</TitleMd>
                                                 </span>
-                                                <u><b>Stats for Nerds:</b></u>
                                                 <div>
-                                                    <b>Name: </b>
-                                                    <span>
-                                                        {activeAccount.name}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <b>ProviderId: </b><span>{activeAccount.providerId}</span>
+                                                    <u><b>Stats for Nerds:</b></u>
+                                                    <div>
+                                                        <b>Name: </b>
+                                                        <span>
+                                                            {activeAccount.name}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <b>ProviderId: </b><span>{activeAccount.providerId}</span>
+                                                    </div>
                                                 </div>
                                                 <br />
                                                 <AccountSelect provider={provider} activeAccount={activeAccount} />
