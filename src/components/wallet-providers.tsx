@@ -17,7 +17,7 @@ const SoilAPISelect = () => {
 
     }
     function handleWeatherXMConnect() {
-        
+
     }
     return (
         <div className="max-w-sm mx-auto py-4">
@@ -66,7 +66,7 @@ export default function WalletProviders() {
             {anyConnected && <SoilAPISelect />}
             <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
                 <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
-                    {!anyConnected && <p className="text-center text-lg">Please connect a wallet.</p>}
+                    {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
                     <ul id="wallets_list" className="list-none pt-3 max-w-sm">
                         {providers?.map((provider, index) => {
                             if (anyConnected && activeAccount) {
