@@ -10,18 +10,26 @@ interface AccountSelectProps {
 
 
 const SoilAPISelect = () => {
+    function handleAmbientConnect() {
 
+    }
+    function handleEcoWittConnect() {
+
+    }
+    function handleWeatherXMConnect() {
+        
+    }
     return (
         <div className="max-w-sm mx-auto py-4">
             <TitleMd className="text-center">Step 2: Select a Soil API</TitleMd>
             <br/>
-            <Button label="Connect to Ambient Weather">
+            <Button label="Connect to Ambient Weather" onClick={handleAmbientConnect}>
                 AmbientWeather
             </Button>
-            <Button label="Connect to EcoWitt">
+            <Button label="Connect to EcoWitt" onClick={handleEcoWittConnect}>
                 EcoWitt
             </Button>
-            <Button label="Connect to WeatherXM">
+            <Button label="Connect to WeatherXM" onClick={handleWeatherXMConnect}>
                 WeatherXM
             </Button>
         </div>
@@ -67,7 +75,7 @@ export default function WalletProviders() {
                                     return (
                                         <>
                                             <section id="wallet_connected">
-                                                <span className="text-center block mb-2">
+                                                <span className="block mb-2">
                                                     <TitleMd>Successfully connected to {provider.metadata.name}!</TitleMd>
                                                 </span>
                                                 <u><b>Stats for Nerds:</b></u>
