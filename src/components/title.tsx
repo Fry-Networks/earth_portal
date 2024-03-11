@@ -6,28 +6,29 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 interface TitleProps {
     children: ReactNode;
+    className: string;
 }
 
-export function TitleXL({ children }: TitleProps) {
+export function TitleXL({ children, className }: TitleProps) {
     return (
-        <h1 className={`${montserrat.className} uppercase text-4xl md:text-6xl font-bold leading-tighter`}>{children}</h1>
+        <h1 className={`${montserrat.className} uppercase text-4xl md:text-6xl font-bold leading-tighter ${className}`}>{children}</h1>
     )
 }
 
-export function TitleLg({ children }: TitleProps) {
+export function TitleLg({ children, className }: TitleProps) {
     return (
-        <h2 className={`uppercase text-3xl mt-2 font-bold leading-tighter`}>{children}</h2>
+        <h2 className={`uppercase text-3xl mt-2 font-bold leading-tighter ${className}`}>{children}</h2>
     )
 }
 
-export function TitleMd({ children }: TitleProps) {
+export function TitleMd({ children, className }: TitleProps) {
     return (
-        <h3 className="font-bold text-2xl">{children}</h3>
+        <h3 className={`font-bold text-2xl ${className}`}>{children}</h3>
     )
 }
 
-export function TitleSm({ children }: TitleProps) {
+export function TitleSm({ children, ...rest }: TitleProps) {
     return (
-        <h4 className="text-xl">{children}</h4>
+        <h4 className="text-xl"  {...rest}>{children}</h4>
     )
 }

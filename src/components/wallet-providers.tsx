@@ -7,20 +7,26 @@ interface AccountSelectProps {
     activeAccount?: any;
 }
 
-const SoilAPISelect = () => (
-    <div className="max-w-sm mx-auto">
-        <TitleMd>Select a Soil API</TitleMd>
-        <Button >
-            AmbientWeather
-        </Button>
-        <Button>
-            EcoWitt
-        </Button>
-        <Button>
-            WeatherXM
-        </Button>
-    </div>
-)
+
+
+const SoilAPISelect = () => {
+
+    return (
+        <div className="max-w-sm mx-auto py-4">
+            <TitleMd className="text-center">Step 2: Select a Soil API</TitleMd>
+            <br/>
+            <Button label="Connect to Ambient Weather">
+                AmbientWeather
+            </Button>
+            <Button label="Connect to EcoWitt">
+                EcoWitt
+            </Button>
+            <Button label="Connect to WeatherXM">
+                WeatherXM
+            </Button>
+        </div>
+    )
+}
 
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
     <>
@@ -43,13 +49,13 @@ const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
 
 export default function WalletProviders() {
     const { providers, activeAccount } = useWallet();
-    
+
     const anyConnected = providers?.some(provider => provider.isConnected);
 
     return (
         <>
 
-            {anyConnected && <SoilAPISelect/>}
+            {anyConnected && <SoilAPISelect />}
             <section id="wallet_section" className="block mx-auto px-4 sm:px-6 py-4">
                 <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
                     {!anyConnected && <p className="text-center text-lg">Please connect a wallet.</p>}
