@@ -2,6 +2,8 @@ import { PROVIDER_ID, Provider, useWallet } from "@txnlab/use-wallet"
 import { Button } from "./button";
 import { TitleMd } from "./title";
 import Image from "next/image";
+import SoilAPISelect from "./soil-api-select";
+
 interface AccountSelectProps {
     provider: Provider;
     activeAccount?: any;
@@ -9,37 +11,12 @@ interface AccountSelectProps {
 
 
 
-const SoilAPISelect = () => {
-    function handleAmbientConnect() {
 
-    }
-    function handleEcoWittConnect() {
-
-    }
-    function handleWeatherXMConnect() {
-
-    }
-    return (
-        <section id="soil_api_select" className="max-w-sm mx-auto py-4">
-            <TitleMd className="text-center">Step 2: Select a Soil API</TitleMd>
-            <br />
-            <Button label="Connect to Ambient Weather" onClick={handleAmbientConnect}>
-                AmbientWeather
-            </Button>
-            <Button label="Connect to EcoWitt" onClick={handleEcoWittConnect}>
-                EcoWitt
-            </Button>
-            <Button label="Connect to WeatherXM" onClick={handleWeatherXMConnect}>
-                WeatherXM
-            </Button>
-        </section>
-    )
-}
 
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
     <section id="account_select">
         <label htmlFor="account_select" className="font-semibold">
-            Select Account
+            Select Account:
         </label>
         <select id="account_select" value={activeAccount ? activeAccount.address : "Address"} onChange={(e) => provider.setActiveAccount(e.target.value)}
             className="border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -63,58 +40,61 @@ export default function WalletProviders() {
     return (
         <>
 
-            {anyConnected && <SoilAPISelect />}
-            <section id="wallet_providers" className="block mx-auto px-4 sm:px-6 py-4">
-                <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
-                    {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
-                    <ul id="wallets_list" className="list-none pt-3 max-w-sm">
-                        {providers?.map((provider, index) => {
-                            if (anyConnected && activeAccount) {
-                                // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
-                                if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
+            <div className="flex flex-col md:flex-row">
+                <section id="wallet_providers" className="block mx-auto px-4">
+                    <nav id="wallet_nav" className="max-w-sm mx-auto mt-4">
+                        {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
+                        <ul id="wallets_list" className="list-none pt-3 max-w-sm">
+                            {providers?.map((provider, index) => {
+                                if (anyConnected && activeAccount) {
+                                    // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
+                                    if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
+                                        return (
+                                            <>
+                                                <section id="wallet_connected">
+                                                    <span className="block mb-2">
+                                                        <Image src={provider.metadata.icon} width={320} height={320} className="mx-auto max-w-sm w-full mb-4" />
+                                                        <TitleMd>Successfully connected to {provider.metadata.name}!</TitleMd>
+                                                    </span>
+                                                    <div>
+                                                        <u><b>Stats for Nerds:</b></u>
+                                                        <div>
+                                                            <b>Name: </b>
+                                                            <span>
+                                                                {activeAccount.name}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <b>ProviderId: </b><span>{activeAccount.providerId}</span>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <AccountSelect provider={provider} activeAccount={activeAccount} />
+                                                    <br />
+                                                    <hr />
+                                                    <br />
+                                                    <Button label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
+                                                        Disconnect from {provider.metadata.name}
+                                                    </Button>
+                                                </section>
+                                            </>
+                                        )
+                                    }
+                                } else {
                                     return (
-                                        <>
-                                            <section id="wallet_connected">
-                                                <span className="block mb-2">
-                                                    <TitleMd>Successfully connected to {provider.metadata.name}!</TitleMd>
-                                                </span>
-                                                <div>
-                                                    <u><b>Stats for Nerds:</b></u>
-                                                    <div>
-                                                        <b>Name: </b>
-                                                        <span>
-                                                            {activeAccount.name}
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <b>ProviderId: </b><span>{activeAccount.providerId}</span>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <AccountSelect provider={provider} activeAccount={activeAccount} />
-                                                <br />
-                                                <hr />
-                                                <br />
-                                                <Button label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
-                                                    Disconnect from {provider.metadata.name}
-                                                </Button>
-                                            </section>
-                                        </>
+                                        <li key={provider.metadata.id}>
+                                            <Button onClick={provider.connect} label={`Connect to ${provider.metadata.name}`}>
+                                                <Image src={provider.metadata.icon} width={24} height={24} className="inline-block relative" alt="Connect to Daffi" /> {provider.metadata.name}
+                                            </Button>
+                                        </li>
                                     )
                                 }
-                            } else {
-                                return (
-                                    <li key={provider.metadata.id}>
-                                        <Button onClick={provider.connect} label={`Connect to ${provider.metadata.name}`}>
-                                            <Image src={provider.metadata.icon} width={24} height={24} className="inline-block relative" alt="Connect to Daffi" /> {provider.metadata.name}
-                                        </Button>
-                                    </li>
-                                )
-                            }
-                        })}
-                    </ul>
-                </nav>
-            </section>
+                            })}
+                        </ul>
+                    </nav>
+                </section>
+                {anyConnected && <SoilAPISelect />}
+            </div>
         </>
 
     )

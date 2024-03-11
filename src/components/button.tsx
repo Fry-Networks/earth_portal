@@ -33,3 +33,11 @@ export function Button({label, children, key, ...rest}: ButtonProps) {
         </button>
     )
 }
+
+export function ButtonSecondary({label, children, key, ...rest}: ButtonProps) {
+    return (
+        <button className="btn btn-secondary" aria-label={label} {...rest}>
+            {children}
+        </button>
+    )
+}
