@@ -40,11 +40,11 @@ export default function WalletProviders() {
     return (
         <>
 
-            <div className="flex flex-col md:flex-row md:justify-center">
+            <div className="flex flex-col lg:flex-row lg:justify-center">
                 <section id="wallet_providers" className="p-4 mt-4">
-                    <nav id="wallet_nav" className="mx-auto max-w-lg bg-brand-black p-4">
+                    <nav id="wallet_nav" className="mx-auto bg-brand-black p-4">
                         {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
-                        <ul id="wallets_list" className="list-none pt-3 flex flex-col">
+                        <ul id="wallets_list" className={`list-none p-4 flex flex-col ${providers ? "" : "md:grid md:grid-cols-2 xl:grid-cols-4 gap-4"}`}>
                             {providers?.map((provider, index) => {
                                 if (anyConnected && activeAccount) {
                                     // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)

@@ -121,20 +121,22 @@ const SoilAPISelect = () => {
     return (
         <section id="soil_api_select" className="p-4">
             {!selectedApi ? (
-                <div id="soil_api_btn_container" className="mx-auto mt-4 max-w-lg bg-brand-black p-4">
+                <div id="soil_api_btn_container" className="mx-auto mt-4 bg-brand-black p-4">
                     <div className="mx-auto">
                         <TitleMd>Step 2: Select a Soil API</TitleMd>
                         <br />
 
-                        <Button label="Connect to Ambient Weather" onClick={() => handleSelect('AmbientWeather')}>
-                            AmbientWeather
-                        </Button>
-                        <Button label="Connect to EcoWitt" onClick={() => handleSelect('EcoWitt')}>
-                            EcoWitt
-                        </Button>
-                        <Button label="Connect to WeatherXM" onClick={() => handleSelect('WeatherXM')}>
-                            WeatherXM
-                        </Button>
+                        <div className="max-w-sm mx-auto">
+                            <Button label="Connect to Ambient Weather" onClick={() => handleSelect('AmbientWeather')}>
+                                AmbientWeather
+                            </Button>
+                            <Button label="Connect to EcoWitt" onClick={() => handleSelect('EcoWitt')}>
+                                EcoWitt
+                            </Button>
+                            <Button label="Connect to WeatherXM" onClick={() => handleSelect('WeatherXM')}>
+                                WeatherXM
+                            </Button>
+                        </div>
 
                     </div>
                 </div>
