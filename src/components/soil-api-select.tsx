@@ -24,7 +24,8 @@ const SoilAPISelect = () => {
         apiKey: '',
         appKey: '',
         email: '',
-        password: ''
+        password: '',
+        mac: ''
     });
 
     const handleSelect = (api : any) => {
@@ -34,7 +35,8 @@ const SoilAPISelect = () => {
             apiKey: '',
             appKey: '',
             email: '',
-            password: ''
+            password: '',
+            mac: ''
         });
     };
 
@@ -89,7 +91,18 @@ const SoilAPISelect = () => {
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="App Key..."
             />
-        </>
+            <label htmlFor="mac">
+                Mac Address
+            </label>
+            <input
+                type="text"
+                id="mac"
+                name="mac"
+                value={inputs.mac}
+                onChange={handleInputChange}
+                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Mac Address"/>
+                </>
     );
 
     const renderWeatherXMInput = () => (
