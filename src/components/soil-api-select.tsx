@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import { Button, ButtonSecondary } from "./button";
 import { TitleMd } from "./title";
+import Image from 'next/image';
+const logos = [
+    {
+        "name" : "AmbientWeather",
+        "src" : "/img/ambient-logo.png"
+    },
+    {
+        "name" : "EcoWitt",
+        "src" : "/img/ecowitt-logo.png"
+    },
+    {
+        "name" : "WeatherXM",
+        "src" : "/img/weatherxm-logo.png"
+    }
+];
 
 const SoilAPISelect = () => {
     const [selectedApi, setSelectedApi] = useState('');
@@ -117,6 +132,7 @@ const SoilAPISelect = () => {
                 return null;
         }
     };
+    const apiLogo = logos.find(logo => logo.name === selectedApi);
 
     return (
         <section id="soil_api_select" className="p-4">
@@ -141,7 +157,17 @@ const SoilAPISelect = () => {
                     </div>
                 </div>
             ) : (
-                <div id="api_input_container" className="block max-w-md mx-auto py-4 px-6">
+                <div id="api_input_container" className="block mx-auto py-4 px-6 bg-brand-black">
+                    {apiLogo && (
+                        <div className="flex justify-center mb-4">
+                            <Image
+                                src={apiLogo.src}
+                                alt={`${selectedApi} logo`}
+                                width={160} // Set these values based on your layout needs
+                                height={160}
+                            />
+                        </div>
+                    )}
                     <TitleMd>{selectedApi}</TitleMd>
                     <p>Please enter the required information for {selectedApi}.</p>
                     <br />

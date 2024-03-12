@@ -13,6 +13,7 @@ export default function Home() {
           Connect Your Wallet
         </ButtonPrimary> */}
       </Hero>
+
       <ConnectWallet/>
     </>
   );
