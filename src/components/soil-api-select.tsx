@@ -5,16 +5,16 @@ import Image from 'next/image';
 
 const logos = [
     {
-        "name" : "AmbientWeather",
-        "src" : "/img/ambient-logo.png"
+        "name": "AmbientWeather",
+        "src": "/img/ambient-logo.png"
     },
     {
-        "name" : "EcoWitt",
-        "src" : "/img/ecowitt-logo.png"
+        "name": "EcoWitt",
+        "src": "/img/ecowitt-logo.png"
     },
     {
-        "name" : "WeatherXM",
-        "src" : "/img/weatherxm-logo.png"
+        "name": "WeatherXM",
+        "src": "/img/weatherxm-logo.png"
     }
 ];
 
@@ -28,7 +28,7 @@ const SoilAPISelect = () => {
         mac: ''
     });
 
-    const handleSelect = (api : any) => {
+    const handleSelect = (api: any) => {
         setSelectedApi(api);
         // Reset inputs when switching between APIs
         setInputs({
@@ -40,7 +40,7 @@ const SoilAPISelect = () => {
         });
     };
 
-    const handleInputChange = (event : any) => {
+    const handleInputChange = (event: any) => {
         const { name, value } = event.target;
         setInputs(inputs => ({
             ...inputs,
@@ -101,8 +101,8 @@ const SoilAPISelect = () => {
                 value={inputs.mac}
                 onChange={handleInputChange}
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Mac Address"/>
-                </>
+                placeholder="Mac Address" />
+        </>
     );
 
     const renderWeatherXMInput = () => (
