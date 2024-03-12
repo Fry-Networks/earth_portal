@@ -50,7 +50,7 @@ hr {
   cursor: pointer;
   height: 100%;
   min-height: 10px;
-  min-width: 10px;
+  min-width: 17.5rem;
   padding: 0;
   touch-action: manipulation;
   width: 100%;
@@ -62,12 +62,22 @@ hr {
   margin:0.5rem auto;
   font-weight:400;
   letter-spacing:1.5px;
+
+  transition: background-color .333s ease;
+  &:hover {
+
+    background: rgb(252, 0, 0);
+  }
   &.btn-primary {
     background: rgb(252, 0, 0);
   }
   &.btn-secondary {
-    background:grey;
+    background:#454444;
     border: none;
+    &:hover {
+
+      background: rgb(85 85 85);
+    }
   }
 }
 
