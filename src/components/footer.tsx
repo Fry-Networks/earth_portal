@@ -42,10 +42,10 @@ export default function Footer() {
                     <Link className="p-2" href="https://www.youtube.com/channel/UCXwYRxNo3yOmQjq1eEClVjg" target="_blank">
                         <Image
                             alt="Youtube"
-                            style={{ width: '20px', height: '20px', objectFit: 'cover' }}
-                            src="https://static.wixstatic.com/media/11062b_fe985b889c144b348eefc7bbc67018b4~mv2.png/v1/fill/w_20,h_20,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/11062b_fe985b889c144b348eefc7bbc67018b4~mv2.png"
+                            width={18}
+                            height={18}
+                            src="/img/youtube-icon.webp"
                         />
-
                     </Link>
                 </div>
 
