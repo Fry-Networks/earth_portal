@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Button } from './ui/button';
-import { TitleSm } from './ui/title';
+import { Button } from './button';
+import { TitleSm } from './title';
 import Image from 'next/image';
 
 export default function Footer() {
