@@ -26,7 +26,7 @@ const SoilAPISelect = () => {
         password: ''
     });
 
-    const handleSelect = (api) => {
+    const handleSelect = (api : any) => {
         setSelectedApi(api);
         // Reset inputs when switching between APIs
         setInputs({
@@ -37,7 +37,7 @@ const SoilAPISelect = () => {
         });
     };
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event : any) => {
         const { name, value } = event.target;
         setInputs(inputs => ({
             ...inputs,

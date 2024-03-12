@@ -6,7 +6,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 interface TitleProps {
     children: ReactNode;
-    className: string;
+    className?: string;
 }
 
 export function TitleXL({ children, className }: TitleProps) {

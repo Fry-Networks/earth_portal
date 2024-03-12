@@ -50,7 +50,7 @@ export default function WalletProviders() {
                                     // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
                                     if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
                                         return (
-                                            <section id="wallet_connected" className="flex flex-col md:flex-row align-top bg-brand-black">
+                                            <section id="wallet_connected" className="flex flex-col md:flex-row align-top bg-brand-black" key={index}>
                                                 <div id="wallet-ui-img" className="flex flex-col flex-col-reverse w-full md:p-4 mx-auto">
                                                     <TitleMd className="mb-4 text-success text-center">Connected to {provider.metadata.name}!</TitleMd>
                                                     <Image alt={provider.metadata.name + " wallet is Connected"} src={provider.metadata.icon} width={320} height={320} className="max-w-sm w-full mb-4 mx-auto" />

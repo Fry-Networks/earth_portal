@@ -3,24 +3,31 @@ import React, { ReactNode, HTMLAttributes } from 'react';
 import Link from 'next/link';
 
 interface ButtonProps {
-
     label: string;
     children: ReactNode;
     // Include any other props you expect
     [key: string]: any; // This line is for any additional props
 }
 
-export function LinkButton({ label, children, key, ...rest }: ButtonProps) {
+interface LinkButtonProps {
+    href: string;
+    label: string;
+    children: ReactNode;
+    // Include any other props you expect
+    [key: string]: any; // This line is for any additional props
+}
+
+export function LinkButton({ href, label, children, key, ...rest }: LinkButtonProps) {
     return (
-        <Link aria-label={label} className="btn block md:inline-block " {...rest}>
+        <Link href={href} aria-label={label} className="btn block md:inline-block " {...rest}>
             {children}
         </Link>
     )
 }
 
-export function LinkButtonPrimary({ label, children, key, ...rest }: ButtonProps) {
+export function LinkButtonPrimary({ href, label, children, key, ...rest }: LinkButtonProps) {
     return (
-        <Link aria-label={label} className="btn btn-primary block md:inline-block"  {...rest}>
+        <Link href={href} aria-label={label} className="btn btn-primary block md:inline-block"  {...rest}>
             {children}
         </Link>
     )

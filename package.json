@@ -15,6 +15,7 @@
     "@txnlab/use-wallet": "^2.7.0",
     "@walletconnect/modal-sign-html": "^2.6.2",
     "algosdk": "^2.7.0",
+    "axios": "^1.6.7",
     "next": "14.1.1",
     "pino-pretty": "^10.3.1",
     "react": "^18",
