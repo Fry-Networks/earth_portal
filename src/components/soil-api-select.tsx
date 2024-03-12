@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, ButtonSecondary } from "./button";
-import { TitleMd } from "./title";
+import { Button, ButtonSecondary } from "./ui/button";
+import { TitleMd } from "./ui/title";
 import Image from 'next/image';
+
 const logos = [
     {
         "name" : "AmbientWeather",

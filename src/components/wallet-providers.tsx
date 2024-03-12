@@ -1,6 +1,6 @@
 import { PROVIDER_ID, Provider, useWallet } from "@txnlab/use-wallet"
-import { Button, ButtonSecondary } from "./button";
-import { TitleMd, TitleSm } from "./title";
+import { Button, ButtonSecondary } from "./ui/button";
+import { TitleMd, TitleSm } from "./ui/title";
 import Image from "next/image";
 import SoilAPISelect from "./soil-api-select";
 

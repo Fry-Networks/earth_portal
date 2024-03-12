@@ -1,6 +1,6 @@
-import Hero from "@/components/hero";
+import Hero from "@/components/ui/hero";
 import Image from "next/image";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import ConnectWallet from "@/components/connect-wallet";
 export default function Home() {
 

@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import Image from "next/image";
 import {
     reconnectProviders,
