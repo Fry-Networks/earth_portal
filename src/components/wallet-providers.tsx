@@ -15,7 +15,7 @@ interface AccountSelectProps {
 
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
     <section id="account_select">
-        <label htmlFor="account_select" className="font-semibold">
+        <label htmlFor="account_select" className="font-semibold block mb-4">
             Select Account:
         </label>
         <select id="account_select" value={activeAccount ? activeAccount.address : "Address"} onChange={(e) => provider.setActiveAccount(e.target.value)}
@@ -41,21 +41,21 @@ export default function WalletProviders() {
         <>
 
             <div className="flex flex-col md:flex-row md:justify-center">
-                <section id="wallet_providers">
-                    <nav id="wallet_nav" className="mx-auto mt-4 max-w-lg mx-auto">
+                <section id="wallet_providers" className="p-4 mt-4">
+                    <nav id="wallet_nav" className="mx-auto max-w-lg bg-brand-black p-4">
                         {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
-                        <ul id="wallets_list" className="list-none pt-3 flex flex-col p-4">
+                        <ul id="wallets_list" className="list-none pt-3 flex flex-col">
                             {providers?.map((provider, index) => {
                                 if (anyConnected && activeAccount) {
                                     // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
                                     if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
                                         return (
                                             <section id="wallet_connected" className="flex flex-col md:flex-row align-top bg-brand-black">
-                                                <div id="wallet-ui-img" className="flex flex-col flex-col-reverse max-w-sm md:p-4 mx-auto">
+                                                <div id="wallet-ui-img" className="flex flex-col flex-col-reverse w-full md:p-4 mx-auto">
                                                     <TitleMd className="mb-4 text-success text-center">Connected to {provider.metadata.name}!</TitleMd>
-                                                    <Image alt={provider.metadata.name + " wallet is Connected"} src={provider.metadata.icon} width={320} height={320} className="mx-auto max-w-sm w-full mb-4" />
+                                                    <Image alt={provider.metadata.name + " wallet is Connected"} src={provider.metadata.icon} width={320} height={320} className="max-w-sm w-full mb-4 mx-auto" />
                                                 </div>
-                                                <div id="wallet_info" className="block max-w-sm p-4 mx-auto">
+                                                <div id="wallet_info" className="block max-w-sm mx-auto">
                                                     <TitleSm>Wallet Info</TitleSm>
                                                     <div className="mt-4">
                                                         <b>Name: </b>
