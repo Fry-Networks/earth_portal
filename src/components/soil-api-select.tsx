@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Button, ButtonSecondary } from "./ui/button";
 import { TitleMd } from "./ui/title";
+import { Account } from '@txnlab/use-wallet';
 import Image from 'next/image';
 import axios from 'axios';
-
-interface Account {
-    address?: string;
-}
 
 interface SoilAPISelectProps {
     account?: Account;
@@ -30,7 +27,6 @@ const logos = [
 const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const [selectedApi, setSelectedApi] = useState('');
     const [formSubmitSuccess, setformSubmitSuccess] = useState(false);
-
     const [inputs, setInputs] = useState({
         apiKey: '',
         appKey: '',
@@ -116,6 +112,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         } catch (e) {
             console.error(e);
         }
+        setformSubmitSuccess(true);
     };
 
     const renderAmbientWeatherInput = () => (
@@ -195,6 +192,10 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             return renderEcoWittInput()
         }
     }
+    const handleChangeAPI = () => {
+        setformSubmitSuccess(false);
+        setSelectedApi('');
+    }
     return (
         <section id="soil_api_select" className="p-4">
             {!selectedApi ? (
@@ -222,7 +223,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                             Submit
                         </Button>
                     </form>
-                    <ButtonSecondary label="Change API" onClick={() => setSelectedApi('')}>
+                    <ButtonSecondary label="Change API" onClick={handleChangeAPI}>
                         Change Soil API
                     </ButtonSecondary>
                 </div>

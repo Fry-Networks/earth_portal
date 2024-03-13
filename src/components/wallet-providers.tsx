@@ -9,10 +9,6 @@ interface AccountSelectProps {
     activeAccount?: Account;
 }
 
-
-
-
-
 const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
     <section id="account_select">
         <label htmlFor="account_select" className="font-semibold block mb-4">
