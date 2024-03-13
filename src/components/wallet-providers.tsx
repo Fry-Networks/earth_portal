@@ -1,4 +1,4 @@
-import { PROVIDER_ID, Provider, useWallet } from "@txnlab/use-wallet"
+import { PROVIDER_ID, Provider, useWallet, Account } from "@txnlab/use-wallet"
 import { Button, ButtonSecondary } from "./ui/button";
 import { TitleMd, TitleSm } from "./ui/title";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import SoilAPISelect from "./soil-api-select";
 
 interface AccountSelectProps {
     provider: Provider;
-    activeAccount?: any;
+    activeAccount?: Account;
 }
 
 
@@ -95,11 +95,10 @@ export default function WalletProviders() {
                         </ul>
                     </nav>
                 </section>
-                {anyConnected && <SoilAPISelect />}
+                {anyConnected && <SoilAPISelect account={activeAccount} />}
             </div>
         </>
 
     )
-
 }
 

@@ -6,14 +6,12 @@ export default function Home() {
 
   return (
     <>
-
       <Hero title="Soil Portal">
         <p>Get started earning $FRY while gathering soil data.</p>
         {/* <ButtonPrimary href="/connect/" label="Learn More">
           Connect Your Wallet
         </ButtonPrimary> */}
       </Hero>
-
       <ConnectWallet/>
     </>
   );
