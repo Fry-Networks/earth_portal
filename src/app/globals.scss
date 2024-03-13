@@ -82,9 +82,12 @@ hr {
   }
 }
 
-footer {
+#footer {
   .copyright {
     color: #595959;
     font-size: 0.75rem;
+  }
+  .text-xl {
+    color:rgb(252, 0, 0);
   }
 }

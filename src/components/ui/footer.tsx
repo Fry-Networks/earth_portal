@@ -6,7 +6,8 @@ import Image from 'next/image';
 export default function Footer() {
     return (
         <footer
-            className="footer   max-w-screen-xl p-4 mx-auto"
+            id="footer"
+            className="max-w-screen-xl p-4 mx-auto"
         >
             <hr />
 
