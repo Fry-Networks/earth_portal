@@ -5,6 +5,9 @@ import { Account } from '@txnlab/use-wallet';
 import Image from 'next/image';
 import axios from 'axios';
 
+import { AmbientLinkKey } from '@/server/submitAmbientKey';
+import { EcowittLinkKey } from '@/server/submitEcoKey';
+
 interface SoilAPISelectProps {
     account?: Account;
 }
@@ -44,7 +47,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             email: '',
             password: '',
             mac: '',
-            address: account?.address
+            address: account?.address 
         });
     };
 
@@ -56,63 +59,31 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         }));
     };
 
-    const handleSoilAPISubmit = async (event: React.FormEvent) => {
+    const handleSoilAPISubmit = async (event: Event) => {
         event.preventDefault(); // Prevent default form submission
-        console.log('Submitting:', inputs);
-        const ecoWitt = selectedApi == 'EcoWitt';
-        const ambientWeather = selectedApi == 'AmbientWeather';
-
-        // Replace these URLs with your actual endpoint URLs
-        const ecoWittEndpoint = 'http://127.0.0.1:666/api/submitEcokey';
-        const ambientWeatherEndpoint = 'http://127.0.0.1:666/api/submitAmbientKey';
-
+    
         try {
-            if (ecoWitt) {
-                const response = await fetch(ecoWittEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(inputs),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to submit EcoWitt data');
+            if (selectedApi === 'EcoWitt') {
+                // Submit to EcoWitt
+                if(inputs.address !== undefined) {
+                    AmbientLinkKey(inputs.apiKey, inputs.address)
                 } else {
-                    setformSubmitSuccess(true);
+                    throw Error("no address");
                 }
-
-                // Handle response data or show success message
-                const data = await response.json();
-                console.log('EcoWitt data submitted successfully:', data);
-                alert('EcoWitt data submitted successfully.');
-            } else if (ambientWeather) {
-                const response = await fetch(ambientWeatherEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(inputs),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to submit AmbientWeather data');
+            } else if (selectedApi === 'AmbientWeather') {
+                if(inputs.address !== undefined) {
+                    EcowittLinkKey(inputs.key, inputs.appKey, inputs.address)
                 } else {
-                    setformSubmitSuccess(true);
+                    throw Error("no address");
                 }
-
-                // Handle response data or show success message
-                const data = await response.json();
-                console.log('AmbientWeather data submitted successfully:', data);
-                alert('AmbientWeather data submitted successfully.');
-
             } else {
-                throw Error("no api selected");
+                throw new Error("No API selected");
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error("Submission error", error);
+            setformSubmitSuccess(false); // Indicate failure
+            // Optionally, set error state here to display an error message
         }
-        setformSubmitSuccess(true);
     };
 
     const renderAmbientWeatherInput = () => (

@@ -3,6 +3,7 @@ import { Button, ButtonSecondary } from "./ui/button";
 import { TitleMd, TitleSm } from "./ui/title";
 import Image from "next/image";
 import SoilAPISelect from "./soil-api-select";
+import Loading from "./ui/loading";
 
 interface AccountSelectProps {
     provider: Provider;
@@ -35,10 +36,8 @@ export default function WalletProviders() {
 
     if (providers == null) {
         return (
-            <div className="max-w-sm flex flex-row justify-center mt-6 mb-6 mx-auto">
-               <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
-        )
+            <Loading/>
+        )   
     } else {
         return (
             <>
