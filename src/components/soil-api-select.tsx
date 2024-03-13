@@ -75,13 +75,13 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     },
                     body: JSON.stringify(inputs),
                 });
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to submit EcoWitt data');
                 } else {
                     setformSubmitSuccess(true);
                 }
-    
+
                 // Handle response data or show success message
                 const data = await response.json();
                 console.log('EcoWitt data submitted successfully:', data);
@@ -94,18 +94,18 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     },
                     body: JSON.stringify(inputs),
                 });
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to submit AmbientWeather data');
                 } else {
                     setformSubmitSuccess(true);
                 }
-    
+
                 // Handle response data or show success message
                 const data = await response.json();
                 console.log('AmbientWeather data submitted successfully:', data);
                 alert('AmbientWeather data submitted successfully.');
-    
+
             } else {
                 throw Error("no api selected");
             }
@@ -197,43 +197,41 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         setSelectedApi('');
     }
     return (
-        <section id="soil_api_select" className="p-4">
-            {!selectedApi ? (
-                <div id="soil_api_btn_container" className="mx-auto mt-4 bg-brand-black p-4">
-                    <TitleMd>Step 2: Select a Soil API</TitleMd>
-                    <div className="max-w-sm mx-auto mt-4">
-                        {logos.map(logo => (
-                            <Button key={logo.name} label={`Connect to ${logo.name}`} onClick={() => handleSelect(logo.name)}>
-                                {logo.name}
-                            </Button>
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                <div id="api_input_container" className="mx-auto py-4 px-6 mt-4 bg-brand-black">
-                    {apiLogo && (
-                        <div className="flex justify-center mb-4">
-                            <Image src={apiLogo.src} alt={`${selectedApi} logo`} width={160} height={160} />
+        <>
+            <section id="soil_api_select" className="p-4">
+                {!selectedApi ? (
+                    <div id="soil_api_btn_container" className="mx-auto mt-4 bg-brand-black p-4">
+                        <TitleMd>Step 2: Select a Soil API</TitleMd>
+                        <div className="max-w-sm mx-auto mt-4">
+                            {logos.map(logo => (
+                                <Button key={logo.name} label={`Connect to ${logo.name}`} onClick={() => handleSelect(logo.name)}>
+                                    {logo.name}
+                                </Button>
+                            ))}
                         </div>
-                    )}
-                    <TitleMd>{selectedApi}</TitleMd>
-                    <form onSubmit={handleSoilAPISubmit}>
-                        {renderAPIInput()}
-                        <Button label="Submit" type="submit">
-                            Submit
-                        </Button>
-                    </form>
-                    <ButtonSecondary label="Change API" onClick={handleChangeAPI}>
-                        Change Soil API
-                    </ButtonSecondary>
-                </div>
-            )}
-            {formSubmitSuccess && 
-                <div>
-                    Successfuly submitted!
-                </div>
-            }
-        </section>
+                    </div>
+                ) : (
+                    <div id="api_input_container" className="mx-auto py-4 px-6 mt-4 bg-brand-black">
+                        {apiLogo && (
+                            <div className="flex justify-center mb-4">
+                                <Image src={apiLogo.src} alt={`${selectedApi} logo`} width={160} height={160} />
+                            </div>
+                        )}
+                        <TitleMd>{selectedApi}</TitleMd>
+                        <form onSubmit={handleSoilAPISubmit}>
+                            {renderAPIInput()}
+                            <Button label="Submit" type="submit">
+                                Submit
+                            </Button>
+                        </form>
+                        <ButtonSecondary label="Change API" onClick={handleChangeAPI}>
+                            Change Soil API
+                        </ButtonSecondary>
+                    </div>
+                )}
+            </section>
+        </>
+
     );
 };
 
