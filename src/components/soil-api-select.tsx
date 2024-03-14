@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ButtonSecondary } from "./ui/button";
 import { TitleMd } from "./ui/title";
 import { Account } from '@txnlab/use-wallet';
 import Image from 'next/image';
 import axios from 'axios';
-
 import { AmbientLinkKey } from '@/server/submitAmbientKey';
 import { EcowittLinkKey } from '@/server/submitEcoKey';
+import WalletProviders from "./wallet-providers";
+import { useRouter } from 'next/navigation'
+import { CookiesProvider, useCookies } from 'react-cookie'
+
 
 interface SoilAPISelectProps {
     account?: Account;
@@ -28,17 +31,24 @@ const logos = [
 ];
 
 const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
+    const router = useRouter()
     const [selectedApi, setSelectedApi] = useState('');
     const [formSubmitSuccess, setformSubmitSuccess] = useState(false);
     const [inputs, setInputs] = useState({
-        apiKey: '',
-        appKey: '',
-        email: '',
-        password: '',
-        mac: '',
+        apiKey: "",
+        appKey: "",
+        email: "",
+        password: "",
+        mac: "",
         address: account?.address
     });
-
+    const [responseData, setresponseData] = useState({});
+    const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address'])
+    useEffect(() => {
+        if (cookies.soilAPI !== null) {
+            setformSubmitSuccess(true);
+        }
+    });
     const handleSelect = (api: string) => {
         setSelectedApi(api);
         setInputs({
@@ -47,7 +57,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             email: '',
             password: '',
             mac: '',
-            address: account?.address 
+            address: account?.address
         });
     };
 
@@ -59,30 +69,37 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         }));
     };
 
-    const handleSoilAPISubmit = async (event: Event) => {
+    const handleSoilAPISubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission
-    
         try {
-            if (selectedApi === 'EcoWitt') {
-                // Submit to EcoWitt
-                if(inputs.address !== undefined) {
-                    AmbientLinkKey(inputs.apiKey, inputs.address)
-                } else {
-                    throw Error("no address");
-                }
-            } else if (selectedApi === 'AmbientWeather') {
-                if(inputs.address !== undefined) {
-                    EcowittLinkKey(inputs.key, inputs.appKey, inputs.address)
-                } else {
-                    throw Error("no address");
-                }
+            if (selectedApi === 'EcoWitt' && inputs.address) {
+                // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
+                // setformSubmitSuccess(data.verified);
+                setformSubmitSuccess(true);
+                setCookie('soilAPI', selectedApi, { path: '/finish' });
+                setCookie('apiKey', inputs.apiKey, { path: '/settings' });
+                setCookie('appKey', inputs.appKey, { path: '/settings' });
+
+                router.push("/finish", { scroll: false })
+
+            } else if (selectedApi === 'AmbientWeather' && inputs.address) {
+                // const data = await AmbientLinkKey(inputs.apiKey, inputs.address);
+                // console.log("AmbientWeather Submit Success", data);
+                // setformSubmitSuccess(data.verified);
+                setformSubmitSuccess(true);
+
+                setCookie('soilAPI', selectedApi, { path: '/finish' });
+                setCookie('apiKey', inputs.apiKey, { path: '/finish' });
+                setCookie('appKey', inputs.appKey, { path: '/finish' });
+                setCookie('mac', inputs.mac, { path: '/finish' });
+
+                router.push("/finish", { scroll: false })
             } else {
-                throw new Error("No API selected");
+                throw new Error("No API selected or address is missing");
             }
         } catch (error) {
             console.error("Submission error", error);
             setformSubmitSuccess(false); // Indicate failure
-            // Optionally, set error state here to display an error message
         }
     };
 
@@ -92,6 +109,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 API Key
             </label>
             <input
+                required={true}
                 type="text"
                 id="api_key"
                 name="apiKey"
@@ -104,6 +122,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 Application Key
             </label>
             <input
+                required={true}
                 type="text"
                 id="appKey"
                 name="appKey"
@@ -167,6 +186,8 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         setformSubmitSuccess(false);
         setSelectedApi('');
     }
+
+
     return (
         <>
             <section id="soil_api_select" className="p-4">
@@ -204,6 +225,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         </>
 
     );
+
 };
 
 export default SoilAPISelect;

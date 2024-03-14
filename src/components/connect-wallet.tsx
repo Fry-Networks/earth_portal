@@ -17,8 +17,6 @@ import { DaffiWalletConnect } from '@daffiwallet/connect'
 import { WalletConnectModalSign } from "@walletconnect/modal-sign-html";
 import WalletProviders from "./wallet-providers";
 
-
-
 export default function ConnectWallet() {
     const walletProviders = useInitializeProviders({
         providers: [
@@ -42,15 +40,6 @@ export default function ConnectWallet() {
       });
     const { providers, activeAccount } = useWallet();
     const anyConnected = providers?.some(provider => provider.isConnected);
-
-    const [isEcowittModalOpen, setIsEcowittModalOpen] = useState(false);
-    const [isWeatherXMModalOpen, setIsWeatherXMModalOpen] = useState(false);
-    const showEcowittModal = () => {
-        setIsEcowittModalOpen(true);
-    };
-    const showWeatherXMModal = () => {
-        setIsWeatherXMModalOpen(true);
-    };
 
     const [isModalOpen, setModalIsOpen] = useState(false);
 

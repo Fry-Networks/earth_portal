@@ -41,7 +41,6 @@ export default function WalletProviders() {
     } else {
         return (
             <>
-    
                 <div className="flex flex-col lg:flex-row md:justify-center">
                     <section id="wallet_providers" className="p-4 mt-4">
                         <nav id="wallet_nav" className="mx-auto bg-brand-black p-4">
