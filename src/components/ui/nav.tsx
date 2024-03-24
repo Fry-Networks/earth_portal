@@ -35,11 +35,11 @@ const Nav: React.FC = () => {
                                 <Image src="/svg/home.svg" width={18} height={18} alt="Soil Portal Homepage" />
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link href="/settings" className="block py-2 px-3 rounded " aria-current="page">
                                 <Image src="/svg/settings.svg" width={18} height={18} alt="Soil Portal Homepage" />
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
