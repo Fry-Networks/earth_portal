@@ -76,7 +76,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address, inputs.email).then((data) => {
+                const data = await EcowittLinkKey(inputs.email, inputs.apiKey, inputs.appKey, inputs.address).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
