@@ -4,10 +4,11 @@ import "dotenv/config";
 
 const ecourl = `http://${process.env.API_HOST}:${process.env.API_PORT}/api/submitEcokey`;
 export async function EcowittLinkKey(
-    email: string,
-    key: string,
     appKey: string,
-    address: string
+    key: string,
+    mac: string,
+    address: string,
+    email: string
 ): Promise<{
     verified: boolean;
     data: {

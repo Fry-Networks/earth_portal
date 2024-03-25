@@ -43,7 +43,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         address: account?.address
     });
     const [responseData, setresponseData] = useState({});
-    const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address'])
+    const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address', 'email'])
     useEffect(() => {
         if (cookies.soilAPI !== null) {
             setformSubmitSuccess(true);
@@ -76,10 +76,12 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                const data = await EcowittLinkKey(inputs.email, inputs.apiKey, inputs.appKey, inputs.address).then((data) => {
+                const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.mac, inputs.address, inputs.email).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
+                    setCookie('mac', inputs.mac, { path: '/finish' });
+                    setCookie('email', inputs.email, { path: '/finish' });
                     setformSubmitSuccess(true);
                     router.push("/finish", { scroll: false })
                 });
@@ -88,14 +90,8 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 
 
             } else if (selectedApi === 'AmbientWeather' && inputs.address) {
-
-
-
-
-
-
                 
-                AmbientLinkKey(inputs.apiKey, inputs.address, inputs.email).then((data) => {
+                AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
