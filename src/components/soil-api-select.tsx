@@ -76,7 +76,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address).then((data) => {
+                await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address, inputs.email).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
@@ -95,7 +95,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
 
                 
-                AmbientLinkKey(inputs.apiKey, inputs.address).then((data) => {
+                AmbientLinkKey(inputs.apiKey, inputs.address, inputs.email).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
