@@ -29,7 +29,7 @@ export async function AmbientLinkKey(
   };
   try {
     await axios
-      .post(ambientUrl, { key, address })
+      .post(ambientUrl, { email, key, address })
       .then((response) => {
         const data: {
           message: string;
