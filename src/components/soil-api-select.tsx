@@ -91,7 +91,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
             } else if (selectedApi === 'AmbientWeather' && inputs.address) {
                 
-                AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address).then((data) => {
+                const data = await AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address).then((data) => {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
@@ -114,6 +114,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 Email
             </label>
             <input
+                id="email"
                 required={true}
                 type="email"
                 name="email"
@@ -155,6 +156,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             </label>
             <input
                 required={true}
+                id="email"
                 type="email"
                 name="email"
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
