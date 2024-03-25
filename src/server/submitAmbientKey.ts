@@ -6,7 +6,8 @@ import "dotenv/config";
 const ambientUrl = `http://${process.env.API_HOST}:${process.env.API_PORT}/api/submitkey`;
 export async function AmbientLinkKey(
   key: string,
-  address: string | undefined
+  address: string | undefined,
+  email: string
 ): Promise<{
   verified: boolean;
   data: {

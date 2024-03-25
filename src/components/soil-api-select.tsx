@@ -75,25 +75,34 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             if (selectedApi === 'EcoWitt' && inputs.address) {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
-                setformSubmitSuccess(true);
-                setCookie('soilAPI', selectedApi, { path: '/finish' });
-                setCookie('apiKey', inputs.apiKey, { path: '/settings' });
-                setCookie('appKey', inputs.appKey, { path: '/settings' });
+                
+                EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address).then((data) => {
+                    setCookie('soilAPI', selectedApi, { path: '/finish' });
+                    setCookie('apiKey', inputs.apiKey, { path: '/finish' });
+                    setCookie('appKey', inputs.appKey, { path: '/finish' });
+                    setformSubmitSuccess(true);
+                    router.push("/finish", { scroll: false })
+                });
 
-                router.push("/finish", { scroll: false })
+
+                
 
             } else if (selectedApi === 'AmbientWeather' && inputs.address) {
-                // const data = await AmbientLinkKey(inputs.apiKey, inputs.address);
-                // console.log("AmbientWeather Submit Success", data);
-                // setformSubmitSuccess(data.verified);
-                setformSubmitSuccess(true);
 
-                setCookie('soilAPI', selectedApi, { path: '/finish' });
-                setCookie('apiKey', inputs.apiKey, { path: '/finish' });
-                setCookie('appKey', inputs.appKey, { path: '/finish' });
-                setCookie('mac', inputs.mac, { path: '/finish' });
 
-                router.push("/finish", { scroll: false })
+
+
+
+
+                
+                AmbientLinkKey(inputs.apiKey, inputs.address).then((data) => {
+                    setCookie('soilAPI', selectedApi, { path: '/finish' });
+                    setCookie('apiKey', inputs.apiKey, { path: '/finish' });
+                    setCookie('appKey', inputs.appKey, { path: '/finish' });
+                    setCookie('mac', inputs.mac, { path: '/finish' });
+                    setformSubmitSuccess(true);
+                    router.push("/finish", { scroll: false })
+                })
             } else {
                 throw new Error("No API selected or address is missing");
             }
@@ -105,6 +114,15 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
     const renderAmbientWeatherInput = () => (
         <>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Email
+            </label>
+            <input
+                required={true}
+                type="email"
+                name="email"
+                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
+
             <label htmlFor="api_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 API Key
             </label>
@@ -136,6 +154,15 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
     const renderEcoWittInput = () => (
         <>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Email
+            </label>
+            <input
+                required={true}
+                type="email"
+                name="email"
+                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
+
             <label htmlFor="api_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 API Key
             </label>

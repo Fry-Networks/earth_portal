@@ -6,7 +6,8 @@ const ecourl = `http://${process.env.API_HOST}:${process.env.API_PORT}/api/submi
 export async function EcowittLinkKey(
     key: string,
     appKey: string,
-    address: string
+    address: string,
+    email: string
 ): Promise<{
     verified: boolean;
     data: {
