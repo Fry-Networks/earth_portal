@@ -45,9 +45,9 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const [responseData, setresponseData] = useState({});
     const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address', 'email'])
     useEffect(() => {
-        if (cookies.soilAPI !== null) {
-            setformSubmitSuccess(true);
-        }
+        // if (cookies.soilAPI !== null) {
+        //     setformSubmitSuccess(true);
+        // }
     });
     const handleSelect = (api: string) => {
         setSelectedApi(api);
@@ -76,7 +76,9 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.mac, inputs.address, inputs.email).then((data) => {
+                const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.mac, inputs.address, inputs.email)
+
+                if (data.data.message === 'success') {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
@@ -84,21 +86,25 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     setCookie('email', inputs.email, { path: '/finish' });
                     setformSubmitSuccess(true);
                     router.push("/finish", { scroll: false })
-                });
-
-
+                } else {
+                    setformSubmitSuccess(false); // Indicate failure
+                }
                 
 
             } else if (selectedApi === 'AmbientWeather' && inputs.address) {
                 
-                const data = await AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address).then((data) => {
+                const data = await AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address)
+            
+                if (data.data.message === 'success') {
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('apiKey', inputs.apiKey, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
                     setformSubmitSuccess(true);
                     router.push("/finish", { scroll: false })
-                })
+                } else {
+                    setformSubmitSuccess(false); // Indicate failure    
+                }
             } else {
                 throw new Error("No API selected or address is missing");
             }
@@ -214,10 +220,11 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         setSelectedApi('');
     }
 
-
-    return (
+    // setformSubmitSuccess(false);
+    return (    
         <>
             <section id="soil_api_select" className="p-4">
+                {formSubmitSuccess ? (<span>Form Status: Success!</span>) : (<span>Form Status: Failure! Bad input or not filled out.</span>)} 
                 {!selectedApi ? (
                     <div id="soil_api_btn_container" className="mx-auto mt-4 bg-brand-black p-4">
                         <TitleMd>Step 2: Select a Soil API</TitleMd>
