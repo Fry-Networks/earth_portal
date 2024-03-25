@@ -21,7 +21,7 @@ const FinishHero = () => {
 }
 
 const ApiInfo: React.FC = () => {
-    const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address'])
+    const [cookies, setCookie] = useCookies(['email', 'soilAPI', 'apiKey', 'appKey', 'mac', 'address'])
     let content = null;
 
     switch (cookies.soilAPI) {
@@ -127,7 +127,7 @@ const Settings: React.FC = () => {
         } else {
             return (
                 <>
-                    <SettingsHero />
+                    {/* <SettingsHero /> */}
                     <section>
                         <div>
                             <p>Sorry, you have not configured your Soil Miner.</p>
