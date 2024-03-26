@@ -71,9 +71,10 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
     const handleFormValidation = (message : string) => {
         console.log("message",message);
-        if (message === "Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.") {
+        if (message.startsWith("Successfully")) {
             setValidationText(message);
             setformSubmitSuccess(true);
+            router.push("/finish", { scroll: false })
         } else {
             setValidationText(message);
             setformSubmitSuccess(false);
@@ -83,14 +84,13 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const handleSoilAPISubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission
         try {
-            if (selectedApi === 'EcoWitt' && inputs.address) {
+            if (selectedApi === 'EcoWitt' && inputs.appKey && inputs.key && inputs.mac && inputs.address && inputs.email) {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                const data = await EcowittLinkKey( inputs.appKey, inputs.key, inputs.mac, inputs.address, inputs.email)
-                setValidationText(data.data.message);
-
-                if (data.data.message === 'Successfully linked your API Key to your wallet address! We will soon begin to retreive data from your weather stations/devices') {
+                const data = await EcowittLinkKey(inputs.appKey, inputs.key, inputs.mac, inputs.address, inputs.email)
+                
+                if (data.data.message === 'Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.') {
 
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
@@ -98,37 +98,30 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     setCookie('address', inputs.address, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
                     setCookie('email', inputs.email, { path: '/finish' });
+                } 
+                handleFormValidation(data.data.message);
 
-                    handleFormValidation(data.data.message);
+            } else if (selectedApi === 'AmbientWeather' && inputs.key && inputs.address && inputs.email) {
+                
+                const data = await AmbientLinkKey(inputs.email, inputs.key, inputs.address);
 
-                    router.push("/finish", { scroll: false })
-                } else  {
-                    handleFormValidation(data.data.message);
-                }
                 
 
-            } else if (selectedApi === 'AmbientWeather' && inputs.address) {
-                
-                const data = await AmbientLinkKey(inputs.email, inputs.key, inputs.address)
-                setValidationText(data.data.message);
                 if (data.data.message === 'Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.') {
- 
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
                     setCookie('key', inputs.key, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
                     setCookie('email', inputs.email, { path: '/finish' });
-                    setformSubmitSuccess(true);
-                    router.push("/finish", { scroll: false })
-                } else {
                     
-                    setformSubmitSuccess(false); // Indicate failure    
-                }
+                } 
+                handleFormValidation(data.data.message);
             } else {
                 throw new Error("No API selected or address is missing");
             }
         } catch (error) {
             console.error("Submission error", error);
+            setValidationText("Error submitting form. Please try again.");
             setformSubmitSuccess(false); // Indicate failure
         }
     };
