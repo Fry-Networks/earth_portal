@@ -35,15 +35,16 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const [selectedApi, setSelectedApi] = useState('');
     const [formSubmitSuccess, setformSubmitSuccess] = useState(false);
     const [inputs, setInputs] = useState({
-        apiKey: "",
         appKey: "",
-        email: "",
-        password: "",
+        key: "",
         mac: "",
-        address: account?.address
+        address: account?.address,
+        email: "",
     });
+    const [validationText, setValidationText] = useState('');
+
     const [responseData, setresponseData] = useState({});
-    const [cookies, setCookie] = useCookies(['soilAPI', 'apiKey', 'appKey', 'mac', 'address', 'email'])
+    const [cookies, setCookie] = useCookies(['soilAPI', 'appKey', 'key', 'mac', 'address', 'email'])
     useEffect(() => {
         // if (cookies.soilAPI !== null) {
         //     setformSubmitSuccess(true);
@@ -52,12 +53,11 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const handleSelect = (api: string) => {
         setSelectedApi(api);
         setInputs({
-            apiKey: '',
-            appKey: '',
-            email: '',
-            password: '',
-            mac: '',
-            address: account?.address
+            appKey: "",
+            key: "",
+            mac: "",
+            address: account?.address,
+            email: "",
         });
     };
 
@@ -69,6 +69,17 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         }));
     };
 
+    const handleFormValidation = (message : string) => {
+        console.log("message",message);
+        if (message === "Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.") {
+            setValidationText(message);
+            setformSubmitSuccess(true);
+        } else {
+            setValidationText(message);
+            setformSubmitSuccess(false);
+        }
+    }
+
     const handleSoilAPISubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission
         try {
@@ -76,33 +87,41 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.mac, inputs.address, inputs.email)
+                const data = await EcowittLinkKey( inputs.appKey, inputs.key, inputs.mac, inputs.address, inputs.email)
+                setValidationText(data.data.message);
 
-                if (data.data.message === 'success') {
+                if (data.data.message === 'Successfully linked your API Key to your wallet address! We will soon begin to retreive data from your weather stations/devices') {
+
                     setCookie('soilAPI', selectedApi, { path: '/finish' });
-                    setCookie('apiKey', inputs.apiKey, { path: '/finish' });
+                    setCookie('appKey', inputs.appKey, { path: '/finish' });
+                    setCookie('key', inputs.key, { path: '/finish' });
+                    setCookie('address', inputs.address, { path: '/finish' });
+                    setCookie('mac', inputs.mac, { path: '/finish' });
+                    setCookie('email', inputs.email, { path: '/finish' });
+
+                    handleFormValidation(data.data.message);
+
+                    router.push("/finish", { scroll: false })
+                } else  {
+                    handleFormValidation(data.data.message);
+                }
+                
+
+            } else if (selectedApi === 'AmbientWeather' && inputs.address) {
+                
+                const data = await AmbientLinkKey(inputs.email, inputs.key, inputs.address)
+                setValidationText(data.data.message);
+                if (data.data.message === 'Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.') {
+ 
+                    setCookie('soilAPI', selectedApi, { path: '/finish' });
+                    setCookie('key', inputs.key, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
                     setCookie('email', inputs.email, { path: '/finish' });
                     setformSubmitSuccess(true);
                     router.push("/finish", { scroll: false })
                 } else {
-                    setformSubmitSuccess(false); // Indicate failure
-                }
-                
-
-            } else if (selectedApi === 'AmbientWeather' && inputs.address) {
-                
-                const data = await AmbientLinkKey(inputs.email, inputs.apiKey, inputs.address)
-            
-                if (data.data.message === 'success') {
-                    setCookie('soilAPI', selectedApi, { path: '/finish' });
-                    setCookie('apiKey', inputs.apiKey, { path: '/finish' });
-                    setCookie('appKey', inputs.appKey, { path: '/finish' });
-                    setCookie('mac', inputs.mac, { path: '/finish' });
-                    setformSubmitSuccess(true);
-                    router.push("/finish", { scroll: false })
-                } else {
+                    
                     setformSubmitSuccess(false); // Indicate failure    
                 }
             } else {
@@ -127,29 +146,30 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 name="email"
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
 
-            <label htmlFor="api_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                API Key
+            <label htmlFor="key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Key
             </label>
             <input
                 required={true}
                 type="text"
-                id="api_key"
-                name="apiKey"
-                value={inputs.apiKey}
+                id="key"
+                name="key"
+                value={inputs.key}
                 onChange={handleInputChange}
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="API Key..."
+                placeholder="Key..."
             />
-            <label htmlFor="appKey" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Application Key
+            <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Address
             </label>
             <input
                 required={true}
                 type="text"
-                id="appKey"
-                name="appKey"
-                value={inputs.appKey}
+                id="address"
+                name="address"
+                value={inputs.address}
                 onChange={handleInputChange}
+                disabled={true}
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Application Key..."
             />
@@ -169,29 +189,29 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 name="email"
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
 
-            <label htmlFor="api_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                API Key
+            <label htmlFor="key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                App Key
             </label>
             <input
                 type="text"
-                id="api_key"
-                name="apiKey"
-                value={inputs.apiKey}
-                onChange={handleInputChange}
-                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="API Key..."
-            />
-            <label htmlFor="app_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Application Key
-            </label>
-            <input
-                type="text"
-                id="app_key"
+                id="appKey"
                 name="appKey"
                 value={inputs.appKey}
                 onChange={handleInputChange}
                 className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Application Key..."
+                placeholder="App Key..."
+            />
+            <label htmlFor="key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Key
+            </label>
+            <input
+                type="text"
+                id="key"
+                name="key"
+                value={inputs.key}
+                onChange={handleInputChange}
+                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Key..."
             />
             <label htmlFor="mac">
                 Mac Address
@@ -206,6 +226,7 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                 placeholder="Mac Address" />
         </>
     );
+
     const apiLogo = logos.find(logo => logo.name === selectedApi);
 
     const renderAPIInput = () => {
@@ -215,16 +236,16 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             return renderEcoWittInput()
         }
     }
+
     const handleChangeAPI = () => {
         setformSubmitSuccess(false);
         setSelectedApi('');
     }
 
-    // setformSubmitSuccess(false);
     return (    
         <>
             <section id="soil_api_select" className="p-4">
-                {formSubmitSuccess ? (<span>Form Status: Success!</span>) : (<span>Form Status: Failure! Bad input or not filled out.</span>)} 
+                <span id="validation_text" className="text-error">{validationText}</span>
                 {!selectedApi ? (
                     <div id="soil_api_btn_container" className="mx-auto mt-4 bg-brand-black p-4">
                         <TitleMd>Step 2: Select a Soil API</TitleMd>

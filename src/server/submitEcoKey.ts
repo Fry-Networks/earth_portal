@@ -29,7 +29,7 @@ export async function EcowittLinkKey(
     };
     try {
         await axios
-            .post(ecourl, { key, app_key: appKey, address, email })
+            .post(ecourl, { key, app_key: appKey, mac, address, email })
             .then((response) => {
                 const data: {
                     message: string;

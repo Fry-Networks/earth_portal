@@ -47,11 +47,7 @@ export async function AmbientLinkKey(
       })
       .catch((error) => {
         console.log(error.response?.data);
-        const message =
-        error.response.status ? 
-          error.response?.status === 429
-            ? "You have made too many requests, please try again later."
-            : error.response?.data.message : "We were unable to verify your key. Please try again later, if the problem persists, contact simon.";
+        const message = error.response.status ?  error.response?.status === 429 ? "You have made too many requests, please try again later." : error.response?.data.message : "We were unable to verify your key. Please try again later, if the problem persists, contact simon.";
 
         returnData = {
           verified: false,
@@ -61,7 +57,7 @@ export async function AmbientLinkKey(
         };
       });
   } catch (error) {
-    console.log(error);
+    console.log("submitAmbientKey error:", error);
     returnData = {
       verified: false,
       data: {
