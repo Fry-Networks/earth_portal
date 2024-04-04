@@ -6,7 +6,6 @@ const ecourl = `http://${process.env.API_HOST}:${process.env.API_PORT}/api/submi
 export async function EcowittLinkKey(
     appKey: string,
     key: string,
-    mac: string,
     address: string,
 ): Promise<{
     verified: boolean;
@@ -28,7 +27,7 @@ export async function EcowittLinkKey(
     };
     try {
         await axios
-            .post(ecourl, { key, app_key: appKey, mac, address})
+            .post(ecourl, { key, app_key: appKey, address})
             .then((response) => {
                 const data: {
                     message: string;
