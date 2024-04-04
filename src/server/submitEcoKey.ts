@@ -8,7 +8,6 @@ export async function EcowittLinkKey(
     key: string,
     mac: string,
     address: string,
-    email: string
 ): Promise<{
     verified: boolean;
     data: {
@@ -29,7 +28,7 @@ export async function EcowittLinkKey(
     };
     try {
         await axios
-            .post(ecourl, { key, app_key: appKey, mac, address, email })
+            .post(ecourl, { key, app_key: appKey, mac, address})
             .then((response) => {
                 const data: {
                     message: string;

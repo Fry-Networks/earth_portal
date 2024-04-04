@@ -21,7 +21,7 @@ const FinishHero = () => {
 }
 
 const ApiInfo: React.FC = () => {
-    const [cookies, setCookie] = useCookies(['email', 'soilAPI', 'apiKey', 'appKey', 'mac', 'address'])
+    const [cookies, setCookie] = useCookies(['soilAPI', 'appKey', 'key', 'mac', 'address', 'email'])
     let content = null;
 
     switch (cookies.soilAPI) {
@@ -30,8 +30,9 @@ const ApiInfo: React.FC = () => {
                 <>
                     <TitleMd>AmbientWeather</TitleMd>
                     <dl id="account_info" className="w-max-sm">
-                        <dt>API Key</dt>
-                        <dd>{cookies.apiKey}</dd>
+                        <dt></dt>
+                        <dt>Key</dt>
+                        <dd>{cookies.key}</dd>
                         <dt>Application Key:</dt>
                         <dd>{cookies.appKey}</dd>
                         <dt>Mac</dt>

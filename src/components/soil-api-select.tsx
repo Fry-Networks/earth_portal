@@ -38,13 +38,12 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
         appKey: "",
         key: "",
         mac: "",
-        address: account?.address,
-        email: "",
+        address: account?.address
     });
     const [validationText, setValidationText] = useState('');
 
     const [responseData, setresponseData] = useState({});
-    const [cookies, setCookie] = useCookies(['soilAPI', 'appKey', 'key', 'mac', 'address', 'email'])
+    const [cookies, setCookie] = useCookies(['soilAPI', 'appKey', 'key', 'mac', 'address'])
     useEffect(() => {
         // if (cookies.soilAPI !== null) {
         //     setformSubmitSuccess(true);
@@ -57,7 +56,6 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
             key: "",
             mac: "",
             address: account?.address,
-            email: "",
         });
     };
 
@@ -84,11 +82,11 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
     const handleSoilAPISubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission
         try {
-            if (selectedApi === 'EcoWitt' && inputs.appKey && inputs.key && inputs.mac && inputs.address && inputs.email) {
+            if (selectedApi === 'EcoWitt' && inputs.appKey && inputs.key && inputs.mac && inputs.address) {
                 // const data = await EcowittLinkKey(inputs.apiKey, inputs.appKey, inputs.address);
                 // setformSubmitSuccess(data.verified);
                 
-                const data = await EcowittLinkKey(inputs.appKey, inputs.key, inputs.mac, inputs.address, inputs.email)
+                const data = await EcowittLinkKey(inputs.appKey, inputs.key, inputs.mac, inputs.address)
                 
                 if (data.data.message === 'Successfully linked your API Key to your wallet address!\nWe will soon begin to retreive data from your soil stations/devices.') {
 
@@ -97,13 +95,12 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     setCookie('key', inputs.key, { path: '/finish' });
                     setCookie('address', inputs.address, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
-                    setCookie('email', inputs.email, { path: '/finish' });
                 } 
                 handleFormValidation(data.data.message);
 
-            } else if (selectedApi === 'AmbientWeather' && inputs.key && inputs.address && inputs.email) {
+            } else if (selectedApi === 'AmbientWeather' && inputs.key && inputs.address) {
                 
-                const data = await AmbientLinkKey(inputs.email, inputs.key, inputs.address);
+                const data = await AmbientLinkKey(inputs.key, inputs.address);
 
                 
 
@@ -112,7 +109,6 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
                     setCookie('key', inputs.key, { path: '/finish' });
                     setCookie('appKey', inputs.appKey, { path: '/finish' });
                     setCookie('mac', inputs.mac, { path: '/finish' });
-                    setCookie('email', inputs.email, { path: '/finish' });
                     
                 } 
                 handleFormValidation(data.data.message);
@@ -128,17 +124,6 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
     const renderAmbientWeatherInput = () => (
         <>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Email
-            </label>
-            <input
-                id="email"
-                required={true}
-                onChange={handleInputChange}
-                type="email"
-                name="email"
-                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
-
             <label htmlFor="key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 Key
             </label>
@@ -171,17 +156,6 @@ const SoilAPISelect: React.FC<SoilAPISelectProps> = ({ account }) => {
 
     const renderEcoWittInput = () => (
         <>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Email
-            </label>
-            <input
-                required={true}
-                onChange={handleInputChange}
-                id="email"
-                type="email"
-                name="email"
-                className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
-
             <label htmlFor="key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 App Key
             </label>
