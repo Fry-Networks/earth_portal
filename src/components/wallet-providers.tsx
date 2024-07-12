@@ -1,106 +1,120 @@
-import { PROVIDER_ID, Provider, useWallet, Account } from "@txnlab/use-wallet"
-import { Button, ButtonSecondary } from "./ui/button";
-import { TitleMd, TitleSm } from "./ui/title";
-import Image from "next/image";
-import SoilAPISelect from "./soil-api-select";
-import Loading from "./ui/loading";
+import { Provider, useWallet } from "@txnlab/use-wallet";
+import React from "react";
 
-interface AccountSelectProps {
-    provider: Provider;
-    activeAccount?: Account;
+// Define styles for the buttons and select
+const elementStyle = {
+  backgroundColor: '#4CAF50', /* Green */
+  border: 'none',
+  color: 'white',
+  padding: '15px 32px',
+  textDecoration: 'none',
+  display: 'inline-block',
+  fontSize: '16px',
+  margin: '4px 2px',
+  cursor: 'pointer',
+  borderRadius: '12px', // Rounded corners
+
+};
+
+interface ButtonProps {
+  provider: Provider;
+  style: React.CSSProperties;
+  activeAccount?: any;
 }
 
-const AccountSelect = ({ provider, activeAccount }: AccountSelectProps) => (
-    <section id="account_select">
-        <label htmlFor="account_select" className="font-semibold block mb-4">
-            Select Account:
-        </label>
-        <select id="account_select" value={activeAccount ? activeAccount.address : "Address"} onChange={(e) => provider.setActiveAccount(e.target.value)}
-            className="border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value={""}>
-                --Please Choose an Address--
-            </option>
-            {provider.accounts.map((account, index) => (
-                <option key={index} value={account.address}>
-                    {account.address}
-                </option>
-            ))}
-        </select>
-    </section>
+const DisconnectButton = ({ provider, style }: ButtonProps) => (
+  <button
+    onClick={provider.disconnect}
+    disabled={!provider.isConnected}
+    style={{
+      ...style,
+      backgroundColor: 'red',
+    }}
+  >
+    Disconnect
+  </button>
 );
 
-export default function WalletProviders() {
-    const { providers, activeAccount } = useWallet();
+const ConnectButton = ({ provider, style }: ButtonProps) => (
+  <button style={style} onClick={provider.connect}>
+    Connect
+  </button>
+);
 
-    const anyConnected = providers?.some(provider => provider.isConnected);
+const AccountSelect = ({ provider, style, activeAccount }: ButtonProps) => (
+  <select
+    style={{
+      ...style,
+      width: undefined
+    }}
+    value={activeAccount ? activeAccount.address : "Address"}
+    onChange={(e) => provider.setActiveAccount(e.target.value)}
+  >
+    <option value="Address" disabled>Address</option>
+    {provider.accounts.map((account) => (
+      <option
+        key={"account-" + account.address}
+        value={account.address}
+      >
+        {account.address}
+      </option>
+    ))}
+  </select>
+);
 
-    if (providers == null) {
-        return (
-            <Loading/>
-        )   
-    } else {
-        return (
-            <>
-                <div className="flex flex-col lg:flex-row md:justify-center">
-                    <section id="wallet_providers" className="p-4 mt-4">
-                        <nav id="wallet_nav" className="mx-auto bg-brand-black p-4">
-                            {!anyConnected && <p className="text-center text-lg"><b>Step 1:</b> Please connect a wallet.</p>}
-                            <ul id="wallets_list" className={`list-none p-4 flex flex-col ${anyConnected ? "" : "md:grid md:grid-cols-2 xl:grid-cols-4 gap-4"}`}>
-                                {providers?.map((provider, index) => {
-                                    if (anyConnected && activeAccount) {
-                                        // console.log("provider:", provider.metadata.name, "active:", activeAccount.providerId)
-                                        if (provider.metadata.name.toLocaleLowerCase() == activeAccount.providerId) {
-                                            return (
-                                                <section id="wallet_connected" className="flex flex-col md:flex-row align-top bg-brand-black" key={index}>
-                                                    <div id="wallet-ui-img" className="flex flex-col flex-col-reverse w-full md:p-4 mx-auto">
-                                                        <TitleMd className="mb-4 text-success text-center">Connected to {provider.metadata.name}!</TitleMd>
-                                                        <Image alt={provider.metadata.name + " wallet is Connected"} src={provider.metadata.icon} width={320} height={320} className="max-w-sm w-full mb-4 mx-auto" />
-                                                    </div>
-                                                    <div id="wallet_info" className="block max-w-sm mx-auto">
-                                                        <TitleSm>Wallet Info</TitleSm>
-                                                        <div className="mt-4">
-                                                            <b>Name: </b>
-                                                            <span>
-                                                                {activeAccount.name}
-                                                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <b>ProviderId: </b><span>{activeAccount.providerId}</span>
-                                                        </div>
-    
-                                                        <br />
-                                                        <AccountSelect provider={provider} activeAccount={activeAccount} />
-                                                        <br />
-                                                        <hr />
-                                                        <br />
-                                                        <div>
-                                                            <ButtonSecondary label={`Disconnect from ${provider.metadata.name}`} onClick={provider.disconnect}>
-                                                                Disconnect from {provider.metadata.name}
-                                                            </ButtonSecondary>
-                                                        </div>
-                                                    </div>
-    
-                                                </section>
-                                            )
-                                        }
-                                    } else {
-                                        return (
-                                            <li key={provider.metadata.id}>
-                                                <Button onClick={provider.connect} label={`Connect to ${provider.metadata.name}`}>
-                                                    <Image src={provider.metadata.icon} width={24} height={24} className="inline-block relative" alt="Connect to Daffi" /> {provider.metadata.name}
-                                                </Button>
-                                            </li>
-                                        )
-                                    }
-                                })}
-                            </ul>
-                        </nav>
-                    </section>
-                    {anyConnected && activeAccount && <SoilAPISelect account={activeAccount} />}
-                </div>
-            </>
-    
+export default function Connect() {
+  const { providers, activeAccount } = useWallet();
+
+  // Check if any provider is connected
+  const anyConnected = providers?.some(provider => provider.isConnected);
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap', // Allow items to wrap as necessary
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center'
+    }}>
+      {providers?.map((provider) => (
+        (provider.isConnected || !anyConnected) && (
+          <div key={"provider-" + provider.metadata.id} style={{
+            margin: '0 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+            flexBasis: 'auto', // Each item will shrink or grow as necessary
+            marginBottom: '20px' // Add a margin to prevent items from sticking together when they wrap
+          }}>
+            <h4 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img width={30} height={30} alt="" src={provider.metadata.icon} style={{ marginRight: '10px' }} />
+              {provider.metadata.name} {provider.isActive && "[active]"}
+            </h4>
+            {/* Show the connect button if no provider is connected */}
+            {!anyConnected && <ConnectButton provider={provider} style={elementStyle} />}
+
+            {/* Show the account select if the provider is connected */}
+              {provider.isConnected && provider.isActive && provider.accounts.length && (
+                <AccountSelect
+                provider={provider}
+                style={{
+                  ...elementStyle,
+                  maxWidth: '300px', // Or whatever max width you want
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}
+                activeAccount={activeAccount}
+              />
+              )}
+            {/* Show the disconnect button if the provider is connected */}
+            {provider.isConnected && <DisconnectButton provider={provider} style={elementStyle} />}
+          </div>
         )
-    }
+      ))}
+    </div>
+  );
 }
 

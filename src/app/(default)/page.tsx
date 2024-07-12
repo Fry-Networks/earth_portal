@@ -1,19 +1,36 @@
-import Hero from "@/components/ui/hero";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import ConnectWallet from "@/components/connect-wallet";
+'use client';
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import ConnectWallet from '@/components/connect-wallet';
+import { useEffect } from 'react';
+import Modal from 'react-modal';
 
 export default function Home() {
-
+  useEffect(() => {
+    Modal.setAppElement('#home');
+  }, []);
   return (
-    <>
-      <Hero title="Soil Portal">
-        <p>Get started earning $FRY while gathering soil data.</p>
-        {/* <ButtonPrimary href="/connect/" label="Learn More">
-          Connect Your Wallet
-        </ButtonPrimary> */}
-      </Hero>
-      <ConnectWallet/>
-    </>
+    <main
+      style={{
+        width: '100vw',
+        color: 'black',
+        background: 'rgba(28, 28, 28, 1)',
+        position: 'relative'
+      }}
+      id='home'
+    >
+      <Navbar></Navbar>
+
+      <div style={{ position: 'absolute', top: '200px', left: '20px' }}> {/* Adjust the position as needed */}
+        <h1
+          className='text-4xl text-left text-white align-middle'
+        >
+          Earth Portal
+        </h1>
+      </div>
+      <ConnectWallet />
+      <Footer />
+
+    </main>
   );
 }

@@ -1,33 +1,36 @@
 "use server";
 import axios from "axios";
 import "dotenv/config";
-
+import { StatusColors } from "./consts";
 const ecourl = `http://${process.env.API_HOST}:${process.env.API_PORT}/api/submitEcokey`;
 export async function EcowittLinkKey(
+    apiKey: string,
     appKey: string,
-    key: string,
-    address: string,
+    address: string
 ): Promise<{
     verified: boolean;
     data: {
         message: string;
+        color: string;
     };
 }> {
     let returnData: {
         verified: boolean;
         data: {
             message: string;
+            color: string;
         };
     } = {
         verified: false,
         data: {
             message:
                 "We were unable to verify your key. Please try again later, if the problem persists, contact simon.",
+            color: StatusColors.ERROR,
         },
     };
     try {
         await axios
-            .post(ecourl, { key, app_key: appKey, address})
+            .post(ecourl, { apiKey, app_key: appKey, address })
             .then((response) => {
                 const data: {
                     message: string;
@@ -39,6 +42,10 @@ export async function EcowittLinkKey(
                         verified: true,
                         data: {
                             message: data.message,
+                            color:
+                                data.status === "ERROR"
+                                    ? StatusColors.ERROR
+                                    : StatusColors.SUCCESS,
                         },
                     };
                 } else {
@@ -49,16 +56,19 @@ export async function EcowittLinkKey(
                                 response.status === 429
                                     ? "You have made too many requests, please try again later."
                                     : response?.data.message : "We were unable to verify your key. Please try again later, if the problem persists, contact simon.",
+                            color: StatusColors.ERROR,
                         },
                     };
                 }
             })
             .catch((error) => {
+                console.log(error);
                 if (!error.response) {
                     returnData = {
                         verified: false,
                         data: {
                             message: "We were unable to verify your key. Please try again later, if the problem persists, contact simon.",
+                            color: StatusColors.ERROR,
                         },
                     };
                     return returnData;
@@ -68,11 +78,16 @@ export async function EcowittLinkKey(
                         error.response?.status === 429
                             ? "You have made too many requests, please try again later."
                             : error.response?.data.message : "We were unable to verify your key. Please try again later, if the problem persists, contact simon.";
-               
+                const color = error.response?.data.status
+                    ? error.response?.data.status === "ERROR"
+                        ? StatusColors.ERROR
+                        : StatusColors.SUCCESS
+                    : StatusColors.ERROR;
                 returnData = {
                     verified: false,
                     data: {
-                        message: message
+                        message: message,
+                        color: color,
                     },
                 };
             });
@@ -82,7 +97,8 @@ export async function EcowittLinkKey(
             verified: false,
             data: {
                 message:
-                    "We were unable to verify your key. Please try again later, if the problem persists, contact simon."
+                    "We were unable to verify your key. Please try again later, if the problem persists, contact simon.",
+                color: StatusColors.ERROR,
             },
         };
     }
