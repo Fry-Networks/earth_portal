@@ -1,10 +1,13 @@
 import { Provider, useWallet } from "@txnlab/use-wallet";
-import React from "react";
+import React, { useState } from "react";
+import { AmbientModal } from "./KeyModal/AmbientModal";
+import { EcowittModal } from "./KeyModal/EcowittModal";
+import OpenButton from "./OpenButton";
 
 // Define styles for the buttons and select
 const elementStyle = {
-  backgroundColor: '#4CAF50', /* Green */
-  border: 'none',
+  backgroundColor: '#4CAF50',
+  border: '1px solid #ffff',
   color: 'white',
   padding: '15px 32px',
   textDecoration: 'none',
@@ -12,8 +15,7 @@ const elementStyle = {
   fontSize: '16px',
   margin: '4px 2px',
   cursor: 'pointer',
-  borderRadius: '12px', // Rounded corners
-
+  borderRadius: '12px',
 };
 
 interface ButtonProps {
@@ -45,7 +47,10 @@ const AccountSelect = ({ provider, style, activeAccount }: ButtonProps) => (
   <select
     style={{
       ...style,
-      width: undefined
+      maxWidth: '300px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
     }}
     value={activeAccount ? activeAccount.address : "Address"}
     onChange={(e) => provider.setActiveAccount(e.target.value)}
@@ -64,18 +69,35 @@ const AccountSelect = ({ provider, style, activeAccount }: ButtonProps) => (
 
 export default function Connect() {
   const { providers, activeAccount } = useWallet();
+  const [isAmbientModalOpen, setIsAmbientModalOpen] = useState(false);
+  const [isEcowittModalOpen, setIsEcowittModalOpen] = useState(false);
 
-  // Check if any provider is connected
+  const showAmbientModal = () => {
+    setIsAmbientModalOpen(true);
+  };
+
+  const showEcowittModal = () => {
+    setIsEcowittModalOpen(true);
+  };
+
   const anyConnected = providers?.some(provider => provider.isConnected);
 
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'row',
-      flexWrap: 'wrap', // Allow items to wrap as necessary
+      flexWrap: 'wrap',
       justifyContent: 'center',
       alignItems: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: '15px',
+      paddingBottom: '25px',
+      marginTop: '30px',
+      marginBottom: '30px',
+      marginRight: '60px',
+      marginLeft: '60px',
+      borderRadius: '20px',
+      backgroundColor: '#84808a',
     }}>
       {providers?.map((provider) => (
         (provider.isConnected || !anyConnected) && (
@@ -85,36 +107,44 @@ export default function Connect() {
             flexDirection: 'column',
             alignItems: 'center',
             position: 'relative',
-            flexBasis: 'auto', // Each item will shrink or grow as necessary
-            marginBottom: '20px' // Add a margin to prevent items from sticking together when they wrap
+            flexBasis: 'auto',
+            marginBottom: '20px',
           }}>
             <h4 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img width={30} height={30} alt="" src={provider.metadata.icon} style={{ marginRight: '10px' }} />
               {provider.metadata.name} {provider.isActive && "[active]"}
             </h4>
-            {/* Show the connect button if no provider is connected */}
             {!anyConnected && <ConnectButton provider={provider} style={elementStyle} />}
-
-            {/* Show the account select if the provider is connected */}
-              {provider.isConnected && provider.isActive && provider.accounts.length && (
-                <AccountSelect
+            {provider.isConnected && provider.isActive && provider.accounts.length && (
+              <AccountSelect
                 provider={provider}
-                style={{
-                  ...elementStyle,
-                  maxWidth: '300px', // Or whatever max width you want
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}
+                style={elementStyle}
                 activeAccount={activeAccount}
               />
-              )}
-            {/* Show the disconnect button if the provider is connected */}
+            )}
             {provider.isConnected && <DisconnectButton provider={provider} style={elementStyle} />}
+            {/* Show the modals after the DisconnectButton if a wallet is connected */}
+            {provider.isConnected && (
+              <div className="flex justify-center items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+              <OpenButton
+                showModal={showEcowittModal}
+                text="Ambient"
+                logo="/ambient.png"
+              />
+              <AmbientModal isOpen={isEcowittModalOpen} setOpen={setIsEcowittModalOpen} />
+              <OpenButton
+                showModal={showAmbientModal}
+                text="Ecowitt"
+                logo="/ecowitt.png"
+              />
+              <EcowittModal isOpen={isAmbientModalOpen} setOpen={setIsAmbientModalOpen} />
+              </div>
+            </div>
+            )}
           </div>
         )
       ))}
     </div>
   );
 }
-
