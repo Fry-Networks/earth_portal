@@ -1,15 +1,13 @@
+//@ts-nocheck
 "use client";
 
-import Loading from "@/components/ui/loading";
-import React, { useState, useEffect } from 'react';
-import { TitleMd } from "@/components/ui/title";
 import Hero from "@/components/ui/hero";
-import { PROVIDER_ID, Provider, useWallet, Account, useInitializeProviders } from "@txnlab/use-wallet";
-import { DeflyWalletConnect } from '@blockshake/defly-connect'
-import { PeraWalletConnect } from '@perawallet/connect'
-import { WalletConnectModalSign } from "@walletconnect/modal-sign-html";
-import { CookiesProvider, useCookies } from 'react-cookie'
+import Loading from "@/components/ui/loading";
+import { TitleMd } from "@/components/ui/title";
+import { useWallet } from "@txnlab/use-wallet";
 import Link from "next/link";
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 const FinishHero = () => {
     return (
         <section>
@@ -47,7 +45,7 @@ const ApiInfo: React.FC = () => {
                     <TitleMd>EcoWitt</TitleMd>
                     <dl id="account_info" className="w-max-sm">
                         <dt>API Key</dt>
-                        <dd>{cookies.apiKey}</dd>
+                        <dd>{cookies.key}</dd>
                         <dt>Application Key:</dt>
                         <dd>{cookies.appKey}</dd>
                     </dl>
